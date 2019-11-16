@@ -1,0 +1,14 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 0.7fr 1.8fr;
+    grid-template-rows: ;
+    grid-template-areas: "c_categoria c_producto";
+}
+
+.c_categoria {
+    grid-area: c_categoria;
+}
+
+.c_producto {
+    grid-area: c_producto;
+}
