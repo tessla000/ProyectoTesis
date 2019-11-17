@@ -12,6 +12,7 @@
         "darryldecode/cart": "^4.0",
         "fideloper/proxy": "^4.0",
         "freshwork/chilean-bundle": "^2.1",
+        "freshwork/transbank": "^1.2",
         "intervention/image": "^2.5",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",

@@ -33,7 +33,7 @@
             @if(!Auth::check())
             <a href="{{ route('login') }}">Pagar</a>
             @else
-            <a href="{{ route('home') }}">Pagar</a>
+            <a href="{{ route('checkout') }}">Pagar</a>
             @endif
         </div>
     </div>
