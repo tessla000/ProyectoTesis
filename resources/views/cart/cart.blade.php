@@ -29,13 +29,16 @@
                 </div>
             </div>
         </form>
-        <div>
-            @if(!Auth::check())
-            <a href="{{ route('login') }}">Pagar</a>
-            @else
-            <a href="{{ route('checkout') }}">Pagar</a>
-            @endif
-        </div>
+        @auth
+        <form action="{{ route('checkout') }}" class="card p-2">
+            @csrf
+            <div class="input-group">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-danger">Pagar</button>
+                </div>
+            </div>
+        </form>
+        @endauth
     </div>
 </div>
 @endsection

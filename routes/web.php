@@ -24,9 +24,9 @@ Route::post('cart/cart-add', 'CartController@add')->name('cart.add');
 Route::get('cart/cart-checkout', 'CartController@cart')->name('cart.checkout');
 Route::post('cart/cart-clear', 'CartController@clear')->name('cart.clear');
 
-Route::get('transbank/checkout', 'CheckoutController@initTransaction')->name('checkout');
-Route::post('transbank/checkout/webpay/response', 'CheckoutController@response')->name('checkout.webpay.response');
-Route::post('transbank/checkout/webpay/finish', 'CheckoutController@finish')->name('checkout.webpay.finish');
+Route::get('checkout', 'CheckoutController@initTransaction')->name('checkout');
+Route::post('checkout/webpay/response', 'CheckoutController@response')->name('checkout.webpay.response');
+Route::post('checkout/webpay/finish', 'CheckoutController@finish')->name('checkout.webpay.finish');
 
 Route::resource('categoria','CategoriaController')->parameters(["categoria" => "categoria"])->names('categoria');
 Route::resource('marca','MarcaController')->parameters(["marca" => "marca"])->names('marca');
