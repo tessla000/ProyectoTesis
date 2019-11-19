@@ -14,7 +14,6 @@ class CheckoutController extends Controller
 {
 	public function initTransaction(WebpayNormal $webpayNormal)
 	{
-		$sessionId = Auth::id();
 		$amount = Cart::getSubTotal();
 		$buyOrder = 'order-' . rand(1000, 9999);
 		$webpayNormal->addTransactionDetail($amount, $buyOrder);
@@ -32,6 +31,9 @@ class CheckoutController extends Controller
 			Transaccion::create([
 				'amount' => $result->detailOutput->amount,
 				'buyOrder' => $result->detailOutput->buyOrder,
+				'commerceCode' => $result->detailOutput->commerceCode,
+				'authorizationCode' => $result->detailOutput->authorizationCode,
+				'detalle' => Cart::getContent(),
 				'userId' => Auth::id(),
 			]);
 			request()->session()->flash('message', 'Compra Realizada!');
@@ -43,5 +45,6 @@ class CheckoutController extends Controller
 	{
 		dd($_POST, session('response'));
 	  // Acá buscar la transacción en tu base de datos y ver si fue exitosa o fallida, para mostrar el mensaje de gracias o de error según corresponda
+		Cart::clear();
 	}
 }

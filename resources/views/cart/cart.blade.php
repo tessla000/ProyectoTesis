@@ -31,10 +31,9 @@
         </form>
         @auth
         <form action="{{ route('checkout') }}" class="card p-2">
-            @csrf
             <div class="input-group">
                 <div class="input-group">
-                    <button type="submit" class="btn btn-danger">Pagar</button>
+                    <button type="submit" class="btn btn-success">Pagar</button>
                 </div>
             </div>
         </form>

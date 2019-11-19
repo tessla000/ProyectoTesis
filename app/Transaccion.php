@@ -10,6 +10,6 @@ class Transaccion extends Model
 	use SoftDeletes;
 
 	protected $table = 'transaccion';
-	protected $primaryKey = 'transaccion';
+	protected $primaryKey = 'transaccion_id';
 	protected $guarded =[];
 }
