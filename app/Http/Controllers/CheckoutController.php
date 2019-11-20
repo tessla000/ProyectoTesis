@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Producto;
 use App\Transaccion;
 use Cart;
 use Freshwork\Transbank\RedirectorHelper;
@@ -25,7 +26,6 @@ class CheckoutController extends Controller
 	public function response(WebpayPatPass $webpayPatPass)
 	{
 		$result = $webpayPatPass->getTransactionResult();
-		session(['response' => $result]);
 	  // Revisar si la transacción fue exitosa ($result->detailOutput->responseCode === 0) o fallida para guardar ese resultado en tu base de datos.
 		if ($result->detailOutput->responseCode == 0) {
 			Transaccion::create([
@@ -33,11 +33,31 @@ class CheckoutController extends Controller
 				'buyOrder' => $result->detailOutput->buyOrder,
 				'commerceCode' => $result->detailOutput->commerceCode,
 				'authorizationCode' => $result->detailOutput->authorizationCode,
+				'resultado' => $result->detailOutput->responseCode,
 				'detalle' => Cart::getContent(),
 				'userId' => Auth::id(),
 			]);
+			foreach (Cart::getContent() as $item) {
+				$cart = $item->quantity;
+				$producto = Producto::find($item->id);
+				$stock = $producto->stock - $cart;
+				$producto->stock = $stock;
+				$producto->save();
+			}
 			request()->session()->flash('message', 'Compra Realizada!');
+			Cart::clear();
+		}else{
+			Transaccion::create([
+				'amount' => $result->detailOutput->amount,
+				'buyOrder' => $result->detailOutput->buyOrder,
+				'commerceCode' => $result->detailOutput->commerceCode,
+				'authorizationCode' => $result->detailOutput->authorizationCode,
+				'resultado' => $result->detailOutput->responseCode,
+				'detalle' => Cart::getContent(),
+				'userId' => Auth::id(),
+			]);
 		}
+		session(['response' => $result]);
 		return RedirectorHelper::redirectBackNormal($result->urlRedirection);
 	}
 
@@ -45,6 +65,5 @@ class CheckoutController extends Controller
 	{
 		dd($_POST, session('response'));
 	  // Acá buscar la transacción en tu base de datos y ver si fue exitosa o fallida, para mostrar el mensaje de gracias o de error según corresponda
-		Cart::clear();
 	}
 }

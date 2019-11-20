@@ -19,8 +19,9 @@ class CreateTransaccionTable extends Migration
             $table->string('buyOrder');
             $table->integer('commerceCode');
             $table->string('authorizationCode');
-            $table->integer('userId');
+            $table->boolean('resultado');
             $table->string('detalle');
+            $table->integer('userId');
             $table->timestamps();
             $table->softDeletes();
         });

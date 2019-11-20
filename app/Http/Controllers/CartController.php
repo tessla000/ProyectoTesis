@@ -14,8 +14,21 @@ class CartController extends Controller
         $name = $producto->name;
         $price = $producto->valor;
         $quantity = (int)$request->qty+1;
-        Cart::add($id, $name, $price, $quantity, array());
-        $request->session()->flash('message', "$producto->name ha sido agregado al carro");
+        $stock = $producto->stock;
+        foreach (Cart::getContent() as $item) {
+            $cart = $item->quantity;
+        }
+        if (Cart::has($id)) {
+            if ($stock > $cart) {
+                Cart::add($id, $name, $price, $quantity, array());
+                $request->session()->flash('message', "$producto->name ha sido agregado al carro!");
+            }else{
+                $request->session()->flash('message', "No se puede agregar más de este producto!");
+            }
+        }else{
+            Cart::add($id, $name, $price, $quantity, array());
+            $request->session()->flash('message', "$producto->name ha sido agregado al carro!");
+        }
         return back();
     }
 
