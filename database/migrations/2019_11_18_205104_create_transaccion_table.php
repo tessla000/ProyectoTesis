@@ -20,10 +20,19 @@ class CreateTransaccionTable extends Migration
             $table->string('commerceCode');
             $table->string('authorizationCode');
             $table->string('resultado');
-            $table->string('detalle');
-            $table->integer('userId');
+            $table->integer('producto_id')->lenght(10)->unsigned()->index()->nullable();
+            $table->integer('quantity');
+            $table->integer('usuario_id')->lenght(10)->unsigned()->index()->nullable();
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::table('transaccion', function (Blueprint $table){
+            $table->foreign('usuario_id')->references('usuario_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+        });
+
+        Schema::table('transaccion', function (Blueprint $table){
+            $table->foreign('producto_id')->references('producto_id')->on('producto')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

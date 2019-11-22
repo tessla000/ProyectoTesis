@@ -6,6 +6,7 @@ use App\Direccion;
 use App\Info;
 use App\Marca;
 use App\Rol;
+use App\Transaccion;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -61,6 +62,11 @@ class User extends Authenticatable
     public function marcas()
     {
         return $this->hasMany(Marca::class, 'marca_id', 'marca_id');
+    }
+
+    public function transaccions()
+    {
+        return $this->hasMany(Transaccion::class, 'transaccion_id', 'transaccion_id');
     }
 
     public function getRouteKeyName()

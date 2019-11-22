@@ -37,34 +37,38 @@ class CheckoutController extends Controller
 		$webpayNormal->acknowledgeTransaction();
 	  // Revisar si la transacción fue exitosa ($result->detailOutput->responseCode === 0) o fallida para guardar ese resultado en tu base de datos.
 		if ($result->detailOutput->responseCode === 0) {
-			Transaccion::create([
-				'amount' => $result->detailOutput->amount,
-				'buyOrder' => $result->detailOutput->buyOrder,
-				'commerceCode' => $result->detailOutput->commerceCode,
-				'authorizationCode' => $result->detailOutput->authorizationCode,
-				'resultado' => $result->detailOutput->responseCode,
-				'detalle' => Cart::getContent(),
-				'userId' => Auth::id(),
-			]);
 			foreach (Cart::getContent() as $item) {
 				$cart = $item->quantity;
 				$producto = Producto::find($item->id);
 				$stock = $producto->stock - $cart;
 				$producto->stock = $stock;
 				$producto->save();
+				Transaccion::create([
+					'amount' => $result->detailOutput->amount,
+					'buyOrder' => $result->detailOutput->buyOrder,
+					'commerceCode' => $result->detailOutput->commerceCode,
+					'authorizationCode' => $result->detailOutput->authorizationCode,
+					'resultado' => $result->detailOutput->responseCode,
+					'producto_id' => $item->id,
+					'quantity' => $item->quantity,
+					'usuario_id' => Auth::id(),
+				]);
 			}
 			request()->session()->flash('message', 'Compra Realizada!');
 			Cart::clear();
 		}else{
-			Transaccion::create([
-				'amount' => $result->detailOutput->amount,
-				'buyOrder' => $result->detailOutput->buyOrder,
-				'commerceCode' => $result->detailOutput->commerceCode,
-				'authorizationCode' => $result->detailOutput->authorizationCode,
-				'resultado' => $result->detailOutput->responseCode,
-				'detalle' => Cart::getContent(),
-				'userId' => Auth::id(),
-			]);
+			foreach (Cart::getContent() as $item) {
+				Transaccion::create([
+					'amount' => $result->detailOutput->amount,
+					'buyOrder' => $result->detailOutput->buyOrder,
+					'commerceCode' => $result->detailOutput->commerceCode,
+					'authorizationCode' => $result->detailOutput->authorizationCode,
+					'resultado' => $result->detailOutput->responseCode,
+					'producto_id' => $item->id,
+					'quantity' => $item->quantity,
+					'usuario_id' => Auth::id(),
+				]);
+			}
 			request()->session()->flash('message', 'Compra Rechazada!');
 		}
 		return RedirectorHelper::redirectBackNormal($result->urlRedirection);
