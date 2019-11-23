@@ -34,7 +34,6 @@ class CheckoutController extends Controller
 		$webpayNormal = TransbankServiceFactory::normal($bag);
 		$result = $webpayNormal->getTransactionResult();
 		session(['response' => $result]);
-		$webpayNormal->acknowledgeTransaction();
 	  // Revisar si la transacción fue exitosa ($result->detailOutput->responseCode === 0) o fallida para guardar ese resultado en tu base de datos.
 		if ($result->detailOutput->responseCode === 0) {
 			foreach (Cart::getContent() as $item) {
@@ -44,39 +43,51 @@ class CheckoutController extends Controller
 				$producto->stock = $stock;
 				$producto->save();
 				Transaccion::create([
+					'token_ws' => $_POST['token_ws'],
+					'paymentTypeCode' => $result->detailOutput->paymentTypeCode,
+					'sharesNumber' => $result->detailOutput->sharesNumber,
 					'amount' => $result->detailOutput->amount,
 					'buyOrder' => $result->detailOutput->buyOrder,
 					'commerceCode' => $result->detailOutput->commerceCode,
 					'authorizationCode' => $result->detailOutput->authorizationCode,
-					'resultado' => $result->detailOutput->responseCode,
+					'responseCode' => $result->detailOutput->responseCode,
 					'producto_id' => $item->id,
 					'quantity' => $item->quantity,
 					'usuario_id' => Auth::id(),
 				]);
 			}
-			request()->session()->flash('message', 'Compra Realizada!');
 			Cart::clear();
 		}else{
 			foreach (Cart::getContent() as $item) {
 				Transaccion::create([
+					'token_ws' => $_POST['token_ws'],
+					'paymentTypeCode' => $result->detailOutput->paymentTypeCode,
+					'sharesNumber' => $result->detailOutput->sharesNumber,
 					'amount' => $result->detailOutput->amount,
 					'buyOrder' => $result->detailOutput->buyOrder,
 					'commerceCode' => $result->detailOutput->commerceCode,
 					'authorizationCode' => $result->detailOutput->authorizationCode,
-					'resultado' => $result->detailOutput->responseCode,
+					'responseCode' => $result->detailOutput->responseCode,
 					'producto_id' => $item->id,
 					'quantity' => $item->quantity,
 					'usuario_id' => Auth::id(),
 				]);
 			}
-			request()->session()->flash('message', 'Compra Rechazada!');
 		}
+		$webpayNormal->acknowledgeTransaction();
 		return RedirectorHelper::redirectBackNormal($result->urlRedirection);
 	}
 
 	public function finish()
 	{
-		dd($_POST, session('response'));
+		// dd($_POST, session('response'));
 	  // Acá buscar la transacción en tu base de datos y ver si fue exitosa o fallida, para mostrar el mensaje de gracias o de error según corresponda
+		$transaccion = Transaccion::where('token_ws', $_POST['token_ws'])->first();
+		if ($transaccion->responseCode === 0) {
+			request()->session()->flash('message', 'Compra Realizada!');
+		}else{
+			request()->session()->flash('message', 'Compra Rechazada!');
+		}
+		return view('checkout.webpay.finish', compact('transaccion', $transaccion));
 	}
 }

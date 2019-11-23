@@ -15,11 +15,14 @@ class CreateTransaccionTable extends Migration
     {
         Schema::create('transaccion', function (Blueprint $table) {
             $table->increments('transaccion_id');
+            $table->string('token_ws');
+            $table->string('paymentTypeCode');
+            $table->integer('sharesNumber');
             $table->integer('amount');
             $table->string('buyOrder');
             $table->string('commerceCode');
             $table->string('authorizationCode');
-            $table->string('resultado');
+            $table->integer('responseCode');
             $table->integer('producto_id')->lenght(10)->unsigned()->index()->nullable();
             $table->integer('quantity');
             $table->integer('usuario_id')->lenght(10)->unsigned()->index()->nullable();
