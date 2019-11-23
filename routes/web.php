@@ -34,3 +34,4 @@ Route::resource('producto','ProductoController')->parameters(["producto" => "pro
 Route::resource('direccion','DireccionController')->parameters(["direccion" => "direccion"])->names('direccion');
 Route::resource('info','InfoController')->parameters(["info" => "info"])->names('info');
 Route::resource('usuario','UserController')->parameters(["usuario" => "usuario"])->names('usuario');
+Route::resource('transaccion','TransaccionController')->parameters(["transaccion" => "transaccion"])->names('transaccion');

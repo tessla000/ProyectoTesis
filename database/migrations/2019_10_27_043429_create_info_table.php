@@ -24,7 +24,7 @@ class CreateInfoTable extends Migration
         });
 
         Schema::table('info', function (Blueprint $table){
-            $table->foreign('usuario_id')->references('usuario_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('usuario_id')->references('usuario_id')->on('users')->onUpdate('cascade');
         });
     }
 

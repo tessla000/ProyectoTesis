@@ -4,7 +4,7 @@ namespace App;
 
 use App\Categoria;
 use App\Marca;
-use App\Transaccion;
+use App\Orden;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -26,10 +26,10 @@ class Producto extends Model
 		return $this->belongsTo(Marca::class, 'marca_id', 'marca_id');
 	}
 
-	public function transaccions()
-    {
-        return $this->hasMany(Transaccion::class, 'transaccion_id', 'transaccion_id');
-    }
+	public function ordens()
+	{
+		return $this->hasMany(Orden::class, 'orden_id', 'orden_id');
+	}
 
 	public function getRouteKeyName()
     {

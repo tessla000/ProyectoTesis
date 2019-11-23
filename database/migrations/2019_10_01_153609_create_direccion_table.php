@@ -28,8 +28,8 @@ class CreateDireccionTable extends Migration
         });
 
         Schema::table('direccion', function (Blueprint $table){
-            $table->foreign('comuna_id')->references('comuna_id')->on('comuna')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('usuario_id')->references('usuario_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('comuna_id')->references('comuna_id')->on('comuna')->onUpdate('cascade');
+            $table->foreign('usuario_id')->references('usuario_id')->on('users')->onUpdate('cascade');
         });
     }
 

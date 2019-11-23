@@ -22,7 +22,7 @@ class CreateComunaTable extends Migration
         });
 
         Schema::table('comuna', function (Blueprint $table){
-            $table->foreign('region_id')->references('region_id')->on('region')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('region_id')->references('region_id')->on('region')->onUpdate('cascade');
         });
     }
 

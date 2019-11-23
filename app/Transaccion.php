@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Producto;
+use App\Orden;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,9 +20,9 @@ class Transaccion extends Model
 		return $this->belongsTo(User::class, 'usuario_id', 'usuario_id');
 	}
 
-	public function producto()
+	public function ordens()
 	{
-		return $this->belongsTo(Producto::class, 'producto_id', 'producto_id');
+		return $this->hasMany(Orden::class, 'orden_id', 'orden_id');
 	}
 
 }

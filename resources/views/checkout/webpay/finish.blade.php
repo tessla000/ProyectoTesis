@@ -4,9 +4,9 @@
 	<section class="jumbotron text-center">
 		<div class="container">
 			<h1 class="jumbotron-heading">Datos de Compra</h1>
-			<strong id="amount">Amount:</strong> {{ $transaccion->amount }}<br>
-			<strong id="authorizationCode">Authorization Code:</strong> {{ $transaccion->authorizationCode }}<br>
-			<strong id="responseCode">Response Code:</strong> {{ $transaccion->responseCode }}<br>
+			<strong>Amount:</strong> {{ $transaccion->amount }}<br>
+			<strong>Authorization Code:</strong> {{ $transaccion->authorizationCode }}<br>
+			<strong>Response Code:</strong> {{ $transaccion->responseCode }}<br>
 		</div>
 	</section>
 </div>

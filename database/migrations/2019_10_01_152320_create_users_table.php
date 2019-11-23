@@ -27,11 +27,11 @@ class CreateUsersTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table){
-            $table->foreign('rol_id')->references('rol_id')->on('rol')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('rol_id')->references('rol_id')->on('rol')->onUpdate('cascade');
         });
 
         Schema::table('marca', function (Blueprint $table){
-            $table->foreign('usuario_id')->references('usuario_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('usuario_id')->references('usuario_id')->on('users')->onUpdate('cascade');
         });
     }
 

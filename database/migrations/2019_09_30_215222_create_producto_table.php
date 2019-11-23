@@ -27,8 +27,8 @@ class CreateProductoTable extends Migration
         });
 
         Schema::table('producto', function (Blueprint $table){
-            $table->foreign('categoria_id')->references('categoria_id')->on('categoria')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('marca_id')->references('marca_id')->on('marca')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('categoria_id')->references('categoria_id')->on('categoria')->onUpdate('cascade');
+            $table->foreign('marca_id')->references('marca_id')->on('marca')->onUpdate('cascade');
         });
     }
 

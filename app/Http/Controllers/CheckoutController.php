@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Orden;
 use App\Producto;
 use App\Transaccion;
 use Cart;
@@ -36,41 +37,53 @@ class CheckoutController extends Controller
 		session(['response' => $result]);
 	  // Revisar si la transacción fue exitosa ($result->detailOutput->responseCode === 0) o fallida para guardar ese resultado en tu base de datos.
 		if ($result->detailOutput->responseCode === 0) {
+			Transaccion::create([
+				'token_ws' => $_POST['token_ws'],
+				'paymentTypeCode' => $result->detailOutput->paymentTypeCode,
+				'sharesNumber' => $result->detailOutput->sharesNumber,
+				'amount' => $result->detailOutput->amount,
+				'buyOrder' => $result->detailOutput->buyOrder,
+				'commerceCode' => $result->detailOutput->commerceCode,
+				'authorizationCode' => $result->detailOutput->authorizationCode,
+				'responseCode' => $result->detailOutput->responseCode,
+				'usuario_id' => Auth::id()
+			]);
 			foreach (Cart::getContent() as $item) {
 				$cart = $item->quantity;
 				$producto = Producto::find($item->id);
 				$stock = $producto->stock - $cart;
 				$producto->stock = $stock;
 				$producto->save();
-				Transaccion::create([
-					'token_ws' => $_POST['token_ws'],
-					'paymentTypeCode' => $result->detailOutput->paymentTypeCode,
-					'sharesNumber' => $result->detailOutput->sharesNumber,
-					'amount' => $result->detailOutput->amount,
-					'buyOrder' => $result->detailOutput->buyOrder,
-					'commerceCode' => $result->detailOutput->commerceCode,
-					'authorizationCode' => $result->detailOutput->authorizationCode,
-					'responseCode' => $result->detailOutput->responseCode,
+				$transaccion = Transaccion::where('token_ws',$_POST['token_ws'])->first()->transaccion_id;
+				Orden::create([
 					'producto_id' => $item->id,
 					'quantity' => $item->quantity,
-					'usuario_id' => Auth::id(),
+					'price' => $item->price,
+					'total' => $item->quantity * $item->price,
+					'transaccion_id' => $transaccion
 				]);
 			}
 			Cart::clear();
 		}else{
+			Transaccion::create([
+				'token_ws' => $_POST['token_ws'],
+				'paymentTypeCode' => $result->detailOutput->paymentTypeCode,
+				'sharesNumber' => $result->detailOutput->sharesNumber,
+				'amount' => $result->detailOutput->amount,
+				'buyOrder' => $result->detailOutput->buyOrder,
+				'commerceCode' => $result->detailOutput->commerceCode,
+				'authorizationCode' => $result->detailOutput->authorizationCode,
+				'responseCode' => $result->detailOutput->responseCode,
+				'usuario_id' => Auth::id()
+			]);
+			$transaccion = Transaccion::where('token_ws',$_POST['token_ws'])->first()->transaccion_id;
 			foreach (Cart::getContent() as $item) {
-				Transaccion::create([
-					'token_ws' => $_POST['token_ws'],
-					'paymentTypeCode' => $result->detailOutput->paymentTypeCode,
-					'sharesNumber' => $result->detailOutput->sharesNumber,
-					'amount' => $result->detailOutput->amount,
-					'buyOrder' => $result->detailOutput->buyOrder,
-					'commerceCode' => $result->detailOutput->commerceCode,
-					'authorizationCode' => $result->detailOutput->authorizationCode,
-					'responseCode' => $result->detailOutput->responseCode,
+				Orden::create([
 					'producto_id' => $item->id,
 					'quantity' => $item->quantity,
-					'usuario_id' => Auth::id(),
+					'price' => $item->price,
+					'total' => $item->quantity * $item->price,
+					'transaccion_id' => $transaccion
 				]);
 			}
 		}
@@ -82,7 +95,7 @@ class CheckoutController extends Controller
 	{
 		// dd($_POST, session('response'));
 	  // Acá buscar la transacción en tu base de datos y ver si fue exitosa o fallida, para mostrar el mensaje de gracias o de error según corresponda
-		$transaccion = Transaccion::where('token_ws', $_POST['token_ws'])->first();
+		$transaccion = Transaccion::where('token_ws',$_POST['token_ws'])->first();
 		if ($transaccion->responseCode === 0) {
 			request()->session()->flash('message', 'Compra Realizada!');
 		}else{
