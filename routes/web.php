@@ -35,3 +35,5 @@ Route::resource('direccion','DireccionController')->parameters(["direccion" => "
 Route::resource('info','InfoController')->parameters(["info" => "info"])->names('info');
 Route::resource('usuario','UserController')->parameters(["usuario" => "usuario"])->names('usuario');
 Route::resource('transaccion','TransaccionController')->parameters(["transaccion" => "transaccion"])->names('transaccion');
+Route::resource('orden','OrdenController')->parameters(["orden" => "orden"])->names('orden');
+Route::resource('envio','EnvioController')->parameters(["envio" => "envio"])->names('envio');

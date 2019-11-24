@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Comuna;
+use App\Envio;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,6 +23,11 @@ class Direccion extends Model
 	public function comuna()
 	{
 		return $this->belongsTo(Comuna::class, 'comuna_id', 'comuna_id');
+	}
+
+	public function envios()
+	{
+		return $this->hasMany(Envio::class, 'envio_id', 'envio_id');
 	}
 
 	public function getRouteKeyName()

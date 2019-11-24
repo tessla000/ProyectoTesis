@@ -127,6 +127,9 @@ class ProductoController extends Controller
         if ($request->input('producto')) {
             $producto = Producto::where('name', $request->input('producto'))->get();
             return view('producto.show', compact('producto', $producto));
+        }elseif ($request->input('orden')) {
+            $producto = Producto::where('name', $request->input('orden'))->get();
+            return view('producto.show', compact('producto', $producto));
         }else{
             return view('producto.show', compact('producto', $producto));
         }
@@ -149,13 +152,13 @@ class ProductoController extends Controller
             if ($producto->marca['usuario_id'] == Auth::id()) {
                 $marca = Marca::where('usuario_id', Auth::id())->get();
             }else{
-               request()->session()->flash('message', 'Acceso Denegado!');
-               return redirect()->route('producto.index');
-           }
-       }
-       $categoria = Categoria::all();
-       return view('producto.edit', compact('producto', 'categoria', 'marca', $producto));
-   }
+             request()->session()->flash('message', 'Acceso Denegado!');
+             return redirect()->route('producto.index');
+         }
+     }
+     $categoria = Categoria::all();
+     return view('producto.edit', compact('producto', 'categoria', 'marca', $producto));
+ }
 
     /**
      * Update the specified resource in storage.

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Transaccion;
+use App\Orden;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class TransaccionController extends Controller
+class OrdenController extends Controller
 {
 
     /**
@@ -24,15 +24,16 @@ class TransaccionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $transaccion = $request->input('orden');
         if (Auth::check()) {
             if (Auth::user()->rol_id == 2) {
-                $transaccion = Transaccion::where('usuario_id', Auth::id())->get();
+                $orden = Orden::with('transaccion')->where('transaccion_id', $transaccion)->get();
             }elseif (Auth::user()->rol_id == 1) {
-                $transaccion = Transaccion::all();
+                $orden = Orden::all();
             }
-            return view('transaccion.index', compact('transaccion', $transaccion));
+            return view('orden.index', compact('orden', $orden));
         }else{
             $request->session()->flash('message', 'Acceso Denegado!');
             return redirect()->route('producto.index');
@@ -63,10 +64,10 @@ class TransaccionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Transaccion  $transaccion
+     * @param  \App\Orden  $orden
      * @return \Illuminate\Http\Response
      */
-    public function show(Transaccion $transaccion)
+    public function show(Orden $orden)
     {
         //
     }
@@ -74,10 +75,10 @@ class TransaccionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Transaccion  $transaccion
+     * @param  \App\Orden  $orden
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transaccion $transaccion)
+    public function edit(Orden $orden)
     {
         //
     }
@@ -86,10 +87,10 @@ class TransaccionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Transaccion  $transaccion
+     * @param  \App\Orden  $orden
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaccion $transaccion)
+    public function update(Request $request, Orden $orden)
     {
         //
     }
@@ -97,10 +98,10 @@ class TransaccionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Transaccion  $transaccion
+     * @param  \App\Orden  $orden
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transaccion $transaccion)
+    public function destroy(Orden $orden)
     {
         //
     }

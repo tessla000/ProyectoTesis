@@ -19,7 +19,7 @@
         <th scope="col">Created At</th>
         <th scope="col">Detalle</th>
         @auth
-        @if(Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3)
+        @if(Auth::user()->rol_id !== 3)
         <th scope="col">Action</th>
         @endif
         @endauth
@@ -32,7 +32,8 @@
         <td>{{$transaccion->amount}}</td>
         <td>{{$transaccion->buyOrder}}</td>
         <td>{{$transaccion->created_at->toFormattedDateString()}}</td>
-        {{-- <td>{{ route('orden.show', ['orden' => $transaccion->transaccion_id]) }}</td> --}}
+        <td><a href="{{ route('orden.index', ['orden' => $transaccion->transaccion_id]) }}">Ir A Detalle</a></td>
+        <td><a href="{{ route('envio.create', ['orden' => $transaccion->transaccion_id]) }}">Enviar Producto</a></td>
       </tr>
       @endforeach
     </tbody>

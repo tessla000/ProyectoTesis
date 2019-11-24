@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Envio;
 use App\Orden;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,11 @@ class Transaccion extends Model
 	public function ordens()
 	{
 		return $this->hasMany(Orden::class, 'orden_id', 'orden_id');
+	}
+
+	public function envios()
+	{
+		return $this->hasMany(Envio::class, 'envio_id', 'envio_id');
 	}
 
 }

@@ -46,6 +46,13 @@
                 </li>
                 @endif
                 @endauth
+                @auth
+                @if(Auth::user()->rol_id !== 3)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('envio.index') }}">Envios</a>
+                </li>
+                @endif
+                @endauth
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sobre Nosotros</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
