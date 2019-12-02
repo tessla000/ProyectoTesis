@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Direccion;
 use App\Envio;
+use App\Direccion;
 use App\Transaccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,9 +26,13 @@ class EnvioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $envio = Envio::all();
+        if ($request->input('info')) {
+            $envio = Envio::where('transaccion_id', $request->input('info'))->get();
+        }else{
+            $envio = Envio::all();
+        }
         return view('envio.index', compact('envio', $envio));
     }
 
@@ -40,7 +44,7 @@ class EnvioController extends Controller
     public function create()
     {
         $direccion = Direccion::where('usuario_id', Auth::id())->get();
-        $transaccion = Transaccion::where('usuario_id', Auth::id())->get();
+        $transaccion = Transaccion::where('transaccion_id', request()->input('envio'))->get();
         $envio = new Envio();
         return view('envio.create', compact('direccion', 'transaccion', 'envio'));
     }
@@ -66,14 +70,20 @@ class EnvioController extends Controller
                 'transaccion_id.nullable' => 'Transaccion'
             ]
         );
-        $envio = Envio::create([
+        $envio = Envio::where('transaccion_id', $request['transaccion_id'])->first();
+        if ($envio) {
+            $request->session()->flash('message', 'El envio ya esta registrado en el sistema!');
+            return redirect()->route('transaccion.index');
+        }else{
+            $envio = Envio::create([
             // 'codigoSeguimiento' => $request['codigoSeguimiento'],
             // 'estado' => $request['estado'],
-            'transaccion_id' => $request['transaccion_id'],
-            'direccion_id' => $request['direccion_id']
-        ]);
-        $request->session()->flash('message', 'Envio En Proceso!');
-        return redirect()->route('envio.show', $envio);
+                'transaccion_id' => $request['transaccion_id'],
+                'direccion_id' => $request['direccion_id']
+            ]);
+            $request->session()->flash('message', 'Envio En Proceso!');
+            return redirect()->route('envio.show', $envio);
+        }
     }
 
     /**
@@ -82,9 +92,14 @@ class EnvioController extends Controller
      * @param  \App\Envio  $envio
      * @return \Illuminate\Http\Response
      */
-    public function show(Envio $envio)
+    public function show(Envio $envio, Request $request)
     {
-        return view('envio.show', compact('envio', $envio));
+        if ($request->input('info')) {
+            $envio = Envio::where('transaccion_id', $request->input('info'))->get();
+            return view('envio.show', compact('envio', $envio));
+        }else{
+            return view('envio.show', compact('envio', $envio));
+        }
     }
 
     /**
@@ -93,9 +108,18 @@ class EnvioController extends Controller
      * @param  \App\Envio  $envio
      * @return \Illuminate\Http\Response
      */
-    public function edit(Envio $envio)
+    public function edit(Envio $envio, Request $request)
     {
-        return view('envio.edit', compact('envio', $envio));
+        if ($request->input('envio')) {
+            $codeTransaccion = Envio::where('transaccion_id', $request->input('envio'))->get()->transaccion_id;
+            $codeDireccion = Envio::where('direccion_id', $request->input('envio'))->get()->direccion_id;
+            $transaccion = Transaccion::where('transaccion_id', $codeTransaccion)->get();
+            $direccion = Direccion::where('direccion_id', $codeDireccion)->get();
+        }else{
+            $transaccion = Transaccion::all();
+            $direccion = Direccion::all();
+        }
+        return view('envio.edit', compact('transaccion','direccion','envio', $envio));
     }
 
     /**
@@ -111,8 +135,8 @@ class EnvioController extends Controller
             [
                 'codigoSeguimiento' => 'nullable',
                 'estado' => 'nullable',
-                'direccion_id' => 'nullable',
-                'transaccion_id' => 'nullable'
+                // 'direccion_id' => 'nullable',
+                // 'transaccion_id' => 'nullable'
             ]
         );
         $envio->update($data);
@@ -126,8 +150,15 @@ class EnvioController extends Controller
      * @param  \App\Envio  $envio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Envio $envio)
+    public function destroy(Envio $envio, Request $request)
     {
-        //
+        if (Auth::user()->rol_id !== 2) {
+            $envio->delete();
+            $request->session()->flash('message', 'Envio Eliminado!');
+            return redirect()->route('envio.index', $envio);
+        }else{
+            $request->session()->flash('message', 'Acceso Denegado!');
+            return redirect()->route('envio.index');
+        }
     }
 }

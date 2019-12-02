@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Envio;
 use App\Transaccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,10 +30,12 @@ class TransaccionController extends Controller
         if (Auth::check()) {
             if (Auth::user()->rol_id == 2) {
                 $transaccion = Transaccion::where('usuario_id', Auth::id())->get();
+                return view('transaccion.index', compact('transaccion', $transaccion));
+
             }elseif (Auth::user()->rol_id == 1) {
                 $transaccion = Transaccion::all();
+                return view('transaccion.index', compact('transaccion', $transaccion));
             }
-            return view('transaccion.index', compact('transaccion', $transaccion));
         }else{
             $request->session()->flash('message', 'Acceso Denegado!');
             return redirect()->route('producto.index');
@@ -68,7 +71,7 @@ class TransaccionController extends Controller
      */
     public function show(Transaccion $transaccion)
     {
-        //
+        // return view('transaccion.show', compact('transaccion', $transaccion));
     }
 
     /**

@@ -24,4 +24,5 @@ class Envio extends Model
 	{
 		return $this->belongsTo(Direccion::class, 'direccion_id', 'direccion_id');
 	}
+
 }

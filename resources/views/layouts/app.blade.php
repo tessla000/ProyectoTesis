@@ -22,7 +22,7 @@
 <body>
     @include('partials.nav')
     @include('partials.status')
-    <main class="py-1">
+    <main class="py-2">
         <div class="container">
             @yield('content')
         </div>

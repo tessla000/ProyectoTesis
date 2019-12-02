@@ -26,7 +26,8 @@
     <tbody>
       @foreach($envio as $envio)
       <tr>
-        <th scope="row">{{$envio->envio_id}}</th>
+        {{-- <th scope="row"><a href="{{ route('envio.show', $envio) }}">{{$envio->envio_id}}</a></th> --}}
+        <th scope="row">{{$envio->envio_id}}</a></th>
         <td>{{$envio->codigoSeguimiento}}</td>
         <td>{{$envio->estado}}</td>
         <td>{{$envio->direccion_id ? $envio->direccion->rut : ''}}</td>
@@ -36,10 +37,10 @@
         <td>{{$envio->direccion_id ? $envio->direccion->direccion1 : ''}}</td>
         <td>{{$envio->direccion_id ? $envio->direccion->descripcion : ''}}</td>
         <td>{{$envio->direccion_id ? $envio->direccion->comuna_id : ''}}</td>
-        <td>{{$envio->transaccion_id }}</td>
+        <td>{{$envio->transaccion_id ? $envio->transaccion->buyOrder : '' }}</td>
         <td>{{$envio->created_at->toFormattedDateString()}}</td>
         @auth
-        @if(Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3)
+        @if(Auth::user()->rol_id == 1)
         <td>
           <div class="btn-group" role="group" aria-label="Basic example">
             <a href="{{ route('envio.edit', ['envio' => $envio]) }}">
@@ -58,5 +59,14 @@
     @endforeach
   </tbody>
 </table>
+@auth
+@if(request('info'))
+<div class="btn-group" role="group" aria-label="Basic example">
+  <a href="{{ URL::previous() }}">
+    <button type="button" class="btn btn-warning">Regresar Atrás</button>
+  </a>
+</div>
+@endif
+@endauth
 </div>
 @endsection

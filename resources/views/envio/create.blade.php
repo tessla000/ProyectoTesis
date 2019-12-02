@@ -33,7 +33,7 @@
 			@endif
 			<button type="submit" class="btn btn-primary">Submit</button>
 			<div class="btn-group" role="group" aria-label="Basic example">
-				<a href="{{ route('envio.index') }}">
+				<a href="{{ route('transaccion.index') }}">
 					<button type="button" class="btn btn-warning">Regresar Atrás</button>
 				</a>
 			</div>

@@ -31,4 +31,8 @@ class Transaccion extends Model
 		return $this->hasMany(Envio::class, 'envio_id', 'envio_id');
 	}
 
+	// public function getRouteKeyName()
+	// {
+	// 	return 'buyOrder';
+	// }
 }

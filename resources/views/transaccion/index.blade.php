@@ -20,7 +20,8 @@
         <th scope="col">Detalle</th>
         @auth
         @if(Auth::user()->rol_id !== 3)
-        <th scope="col">Action</th>
+        <th scope="col">Crear Envio</th>
+        <th scope="col">Ver Envio</th>
         @endif
         @endauth
       </tr>
@@ -33,7 +34,8 @@
         <td>{{$transaccion->buyOrder}}</td>
         <td>{{$transaccion->created_at->toFormattedDateString()}}</td>
         <td><a href="{{ route('orden.index', ['orden' => $transaccion->transaccion_id]) }}">Ir A Detalle</a></td>
-        <td><a href="{{ route('envio.create', ['orden' => $transaccion->transaccion_id]) }}">Enviar Producto</a></td>
+        <td><a href="{{ route('envio.create', ['envio' => $transaccion->transaccion_id]) }}">Enviar Producto</a></td>
+        <td><a href="{{ route('envio.index', ['info' => $transaccion->transaccion_id]) }}">Ver Enviar</a></td>
       </tr>
       @endforeach
     </tbody>

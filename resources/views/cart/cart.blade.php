@@ -14,6 +14,14 @@
                     <small class="text-muted">{{$producto->quantity . ' x $' . $producto->price}}</small>
                 </div>
                 <span class="text-muted">{{'$' . $producto->price * $producto->quantity}}</span>
+                <form action="{{route('cart.remove', ['producto' => $producto->id])}}" method="POST" class="card p-2">
+                    @csrf
+                    <div class="input-group">
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-danger">Quitar</button>
+                        </div>
+                    </div>
+                </form>
             </li>
             @endforeach
             <li class="list-group-item d-flex justify-content-between">

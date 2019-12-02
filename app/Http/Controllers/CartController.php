@@ -41,6 +41,11 @@ class CartController extends Controller
         return view('cart.cart')->with($params);
     }
 
+    public function remove(){
+        Cart::remove(request('producto'));
+        return back()->with('success',"El producto ha sido eliminado del carro");;
+    }
+
     public function clear(){
         Cart::clear();
         return back()->with('success',"El carro de compras ha sido vaciado");;
