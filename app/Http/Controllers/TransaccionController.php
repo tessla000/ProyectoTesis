@@ -29,11 +29,11 @@ class TransaccionController extends Controller
     {
         if (Auth::check()) {
             if (Auth::user()->rol_id == 2) {
-                $transaccion = Transaccion::where('usuario_id', Auth::id())->get();
+                $transaccion = Transaccion::where('usuario_id', Auth::id())->get()->sortBy('created_at');
                 return view('transaccion.index', compact('transaccion', $transaccion));
 
             }elseif (Auth::user()->rol_id == 1) {
-                $transaccion = Transaccion::all();
+                $transaccion = Transaccion::all()->sortBy('created_at');
                 return view('transaccion.index', compact('transaccion', $transaccion));
             }
         }else{

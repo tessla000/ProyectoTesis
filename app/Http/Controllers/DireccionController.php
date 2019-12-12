@@ -29,9 +29,9 @@ class DireccionController extends Controller
     public function index()
     {
         if (Auth::user()->rol_id == 1) {
-            $direccion = Direccion::all();
+            $direccion = Direccion::all()->sortBy('updated_at');
         }else{
-            $direccion = Direccion::where('usuario_id', Auth::id())->get();
+            $direccion = Direccion::where('usuario_id', Auth::id())->get()->sortBy('updated_at');
         }
         return view('direccion.index', compact('direccion', $direccion));
     }

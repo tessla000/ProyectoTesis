@@ -29,9 +29,14 @@ class EnvioController extends Controller
     public function index(Request $request)
     {
         if ($request->input('info')) {
-            $envio = Envio::where('transaccion_id', $request->input('info'))->get();
+            $envio = Envio::where('transaccion_id', $request->input('info'))->get()->sortBy('updated_at');
         }else{
-            $envio = Envio::all();
+            if (Auth::user()->rol_id == 1) {
+                $envio = Envio::all()->sortBy('updated_at');
+            }elseif (Auth::user()->rol_id == 2) {
+                $direccion = Direccion::where('usuario_id', Auth::id())->get();
+                $envio = Envio::whereIn('direccion_id', $direccion)->get()->sortBy('updated_at');
+            }
         }
         return view('envio.index', compact('envio', $envio));
     }
@@ -61,13 +66,13 @@ class EnvioController extends Controller
             [
                 'codigoSeguimiento' => 'nullable',
                 'estado' => 'nullable',
-                'direccion_id' => 'nullable',
-                'transaccion_id' => 'nullable'
+                'direccion_id' => 'required',
+                'transaccion_id' => 'required'
             ],[
                 'codigoSeguimiento.nullable' => 'Codigo Seguimiento requerido',
                 'estado.nullable' => 'Estado',
-                'direccion_id.nullable' => 'Direccion',
-                'transaccion_id.nullable' => 'Transaccion'
+                'direccion_id.required' => 'Direccion requerida',
+                'transaccion_id.required' => 'Transaccion requerida'
             ]
         );
         $envio = Envio::where('transaccion_id', $request['transaccion_id'])->first();

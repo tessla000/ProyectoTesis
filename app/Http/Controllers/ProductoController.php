@@ -34,11 +34,12 @@ class ProductoController extends Controller
         if (Auth::check()) {
             if (Auth::user()->rol_id == 1 || Auth::user()->rol_id == 2) {
                 if ($marca) {
-                    $producto = Producto::with('marca')->where('marca_id', $marca->marca_id)->get();
+                    $producto = Producto::with('marca')->where('marca_id', $marca)->get();
                 }elseif ($categoria) {
-                    $producto = Producto::with('categoria')->where('categoria_id', $categoria->categoria_id)->get();
+                    $producto = Producto::with('categoria')->where('categoria_id', $categoria)->get();
                 }else{
-                    $producto = Producto::all();
+                    // $producto = Producto::all();
+                    $producto = Producto::inRandomOrder()->get();
                 }
             }else{
                 $marca = Marca::where('usuario_id', Auth::id())->get();
@@ -51,7 +52,7 @@ class ProductoController extends Controller
             }elseif ($categoria) {
                 $producto = Producto::with('categoria')->where('categoria_id', $categoria)->get();
             }else{
-                $producto = Producto::all();
+                $producto = Producto::inRandomOrder()->get();
             }
             return view('producto.index', compact('producto', $producto));
         }

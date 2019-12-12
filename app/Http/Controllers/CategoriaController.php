@@ -25,7 +25,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categoria = Categoria::all();
+        $categoria = Categoria::inRandomOrder()->get();
         return view('categoria.index', compact('categoria', $categoria));
     }
 

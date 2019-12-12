@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index()
     {
         if (Auth::user()->rol_id == 1) {
-            $usuario = User::all();
+            $usuario = User::all()->sortBy('rol_id');
         }
         return view('usuario.index', compact('usuario', $usuario));
     }

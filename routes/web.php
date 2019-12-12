@@ -29,6 +29,9 @@ Route::get('checkout', 'CheckoutController@initTransaction')->name('checkout');
 Route::post('checkout/webpay/response', 'CheckoutController@response')->name('response');
 Route::post('checkout/webpay/finish', 'CheckoutController@finish')->name('finish');
 
+// Route::get('grafico', 'GraficoController@index')->name('grafico');
+// Route::get('grafico', 'GraficoController@grafico00')->name('grafico');
+
 Route::resource('categoria','CategoriaController')->parameters(["categoria" => "categoria"])->names('categoria');
 Route::resource('direccion','DireccionController')->parameters(["direccion" => "direccion"])->names('direccion');
 Route::resource('envio','EnvioController')->parameters(["envio" => "envio"])->names('envio');
@@ -38,3 +41,4 @@ Route::resource('orden','OrdenController')->parameters(["orden" => "orden"])->na
 Route::resource('producto','ProductoController')->parameters(["producto" => "producto"])->names('producto');
 Route::resource('transaccion','TransaccionController')->parameters(["transaccion" => "transaccion"])->names('transaccion');
 Route::resource('usuario','UserController')->parameters(["usuario" => "usuario"])->names('usuario');
+Route::resource('grafico','GraficoController')->parameters(["grafico" => "grafico"])->names('grafico');

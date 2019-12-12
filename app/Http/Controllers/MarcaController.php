@@ -28,13 +28,13 @@ class MarcaController extends Controller
     {
         if (Auth::check()) {
             if (Auth::user()->rol_id == 1 || Auth::user()->rol_id == 2) {
-                $marca = Marca::all();
+                $marca = Marca::inRandomOrder()->get();
             }else{
                 $marca = Marca::where('usuario_id', Auth::id())->get();
             }
             return view('marca.index', compact('marca', $marca));
         }else{
-            $marca = Marca::all();
+            $marca = Marca::inRandomOrder()->get();
             return view('marca.index', compact('marca', $marca));
         }
     }

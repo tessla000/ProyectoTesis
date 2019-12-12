@@ -9,6 +9,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="{{ route('grafico.index') }}">Grafico</a>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('categoria.index') }}">Categorias</a>
                 </li>
@@ -19,12 +22,14 @@
                     <a class="nav-link" href="{{ route('producto.index') }}">Productos</a>
                 </li>
                 @auth
+                @if(Auth::user()->rol_id !== 3)
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('direccion.index') }}">Direccion</a>
                 </li>
-                <li class="nav-item">
+{{--                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('info.index') }}">Datos</a>
-                </li>
+                </li> --}}
+                @endif
                 @endauth
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('cart.checkout')}}">
