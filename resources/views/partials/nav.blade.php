@@ -59,8 +59,8 @@
                 @endif
                 @endauth
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sobre Nosotros</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sobre Nosotros</a>
+                    <div class="dropdown-menu">
                       <a class="dropdown-item" href="{{ route('about') }}">About</a>
                       <a class="dropdown-item" href="{{ route('contact') }}">Contact</a>
                       @auth

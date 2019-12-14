@@ -12,3 +12,7 @@
 .c_producto {
     grid-area: c_producto;
 }
+
+.card-deck .card {
+    max-width: calc(25% - 30px);
+}

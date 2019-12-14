@@ -28,15 +28,19 @@ class ProductoController extends Controller
      */
     public function index(Request $request)
     {
+        $marcaM = Marca::all();
+        $categoriaC = Categoria::all();
         $marca = $request->input('marca');
         $categoria = $request->input('categoria');
         $mode = $request->input('mode');
         if (Auth::check()) {
             if (Auth::user()->rol_id == 1 || Auth::user()->rol_id == 2) {
                 if ($marca) {
-                    $producto = Producto::with('marca')->where('marca_id', $marca)->get();
+                    $marca = Marca::where('name', $marca)->get();
+                    $producto = Producto::with('marca')->whereIn('marca_id', $marca)->get();
                 }elseif ($categoria) {
-                    $producto = Producto::with('categoria')->where('categoria_id', $categoria)->get();
+                    $categoria = Categoria::where('name', $categoria)->get();
+                    $producto = Producto::with('categoria')->whereIn('categoria_id', $categoria)->get();
                 }else{
                     // $producto = Producto::all();
                     $producto = Producto::inRandomOrder()->get();
@@ -45,16 +49,18 @@ class ProductoController extends Controller
                 $marca = Marca::where('usuario_id', Auth::id())->get();
                 $producto = Producto::with('marca')->whereIn('marca_id', $marca)->get();
             }
-            return view('producto.index', compact('producto', $producto));
+            return view('producto.index', compact('producto', 'marcaM', 'categoriaC', $producto, $marcaM, $categoriaC));
         }else{
             if ($marca) {
-                $producto = Producto::with('marca')->where('marca_id', $marca)->get();
+                $marca = Marca::where('name', $marca)->get();
+                    $producto = Producto::with('marca')->whereIn('marca_id', $marca)->get();
             }elseif ($categoria) {
-                $producto = Producto::with('categoria')->where('categoria_id', $categoria)->get();
+                $categoria = Categoria::where('name', $categoria)->get();
+                    $producto = Producto::with('categoria')->whereIn('categoria_id', $categoria)->get();
             }else{
                 $producto = Producto::inRandomOrder()->get();
             }
-            return view('producto.index', compact('producto', $producto));
+            return view('producto.index', compact('producto', 'marcaM', 'categoriaC', $producto, $marcaM, $categoriaC));
         }
     }
 
@@ -103,15 +109,7 @@ class ProductoController extends Controller
                 'marca_id.required' => 'Marca requerida'
             ]
         );
-        $producto = Producto::create([
-            'name' => $request['name'],
-            'valor' => $request['valor'],
-            'stock' => $request['stock'],
-            'descripcion' => $request['descripcion'],
-            'categoria_id' => $request['categoria_id'],
-            'marca_id' => $request['marca_id'],
-            'image' => $request['image']
-        ]);
+        $producto = Producto::create($data);
         $this->storeImage($producto);
         $request->session()->flash('message', 'Producto Almacenado!');
         return redirect()->route('producto.show', $producto);
@@ -153,13 +151,13 @@ class ProductoController extends Controller
             if ($producto->marca['usuario_id'] == Auth::id()) {
                 $marca = Marca::where('usuario_id', Auth::id())->get();
             }else{
-               request()->session()->flash('message', 'Acceso Denegado!');
-               return redirect()->route('producto.index');
-           }
-       }
-       $categoria = Categoria::all();
-       return view('producto.edit', compact('producto', 'categoria', 'marca', $producto));
-   }
+             request()->session()->flash('message', 'Acceso Denegado!');
+             return redirect()->route('producto.index');
+         }
+     }
+     $categoria = Categoria::all();
+     return view('producto.edit', compact('producto', 'categoria', 'marca', $producto));
+ }
 
     /**
      * Update the specified resource in storage.

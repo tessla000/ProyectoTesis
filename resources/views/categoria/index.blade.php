@@ -31,7 +31,7 @@
         <th scope="row">{{$categoria->categoria_id}}</th>
         <td><a href="{{ route('categoria.show', $categoria) }}">{{$categoria->name}}</a></td>
         <td>{{$categoria->descripcion}}</td>
-        <td><a href="{{ route('producto.index', ['categoria' => $categoria->categoria_id]) }}">Productos</td>
+        <td><a href="{{ route('producto.index', ['categoria' => $categoria]) }}">Productos</td>
           <td>{{$categoria->created_at->toFormattedDateString()}}</td>
           @auth
           @if(Auth::user()->rol_id == 1)

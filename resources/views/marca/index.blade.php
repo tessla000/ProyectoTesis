@@ -31,7 +31,7 @@
         <th scope="row">{{$marca->marca_id}}</th>
         <td><a href="{{ route('marca.show', $marca) }}">{{$marca->name}}</a></td>
         <td>{{$marca->descripcion}}</td>
-        <td><a href="{{ route('producto.index', ['marca' => $marca->marca_id]) }}">Productos</a></td>
+        <td><a href="{{ route('producto.index', ['marca' => $marca]) }}">Productos</a></td>
         <td>{{$marca->created_at->toFormattedDateString()}}</td>
         @auth
         @if(Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3)
