@@ -1,7 +1,7 @@
 <div class="list-group">
-	<button type="button" class="list-group-item list-group-item-action active">Marcas</button>
+	<button data-toggle="collapse" data-target="#collapse2" type="button" class="list-group-item list-group-item-action active">Marcas</button>
 	@foreach($marcaM as $marca)
-	<a href="{{ route('producto.index', ['marca' => $marca]) }}" class="list-group-item list-group-item-action">{{$marca->name}}</a>
+	<a id="collapse2" href="{{ route('producto.index', ['marca' => $marca]) }}" class="list-group-item list-group-item-action collapse show">{{$marca->name}}</a>
 	@endforeach
 </div>
 {{-- <nav class="nav flex-column">
