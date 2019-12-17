@@ -26,17 +26,26 @@ class GraficoController extends Controller
 		->groupByMonth(date('Y'), true);
 
 		$marca = Marca::where('usuario_id', Auth::id())->get('marca_id');
-		$producto = Producto::whereIn('marca_id', $marca)->get('producto_id');
-		$orden = Orden::whereIn('producto_id', $producto)->get();
+		$producto = Producto::whereIn('marca_id', $marca)->get();
+
+		$pro_id = $producto->map->only(['producto_id']);
+		$pro_name = $producto->map->only(['name']);
+
+		$orden = Orden::whereIn('producto_id', $pro_id)->get();
+		$pro_q = $orden->map->only(['quantity', 'producto_id']);
 		$sum1 = $orden->sum('total');
 		$sum2 = $orden->sum('quantity');
-		// dd($sum2);
+		$name = $producto->pluck('name');
+		// $value = $pro_q->pluck('quantity');
+		$orden2 = Orden::whereIn('producto_id', $pro_id)->groupBy('producto_id')->selectRaw('sum(quantity) as sum')->get();
+		$val = $orden2->pluck('sum');
+		// dd($val->all());
 
 		$line_chart = Charts::create('line', 'highcharts')
-		->title('Cantidad Productos Vendidos')
-		->elementLabel('Vendidos')
-		->labels(['Product 1', 'Product 2', 'Product 3', 'Product 4', 'Product 5', 'Product 6'])
-		->values([15,25,50, 5,10,20])
+		->title('Unidades Vendidos')
+		->elementLabel('Unidades')
+		->labels($name->all())
+		->values($val->all())
 		->dimensions(1000,500)
 		->responsive(true);
 
