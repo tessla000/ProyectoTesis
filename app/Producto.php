@@ -5,12 +5,14 @@ namespace App;
 use App\Categoria;
 use App\Marca;
 use App\Orden;
+use ChristianKuri\LaravelFavorite\Traits\Favoriteable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Producto extends Model
 {
 	use SoftDeletes;
+	use Favoriteable;
 
 	protected $table = 'producto';
 	protected $primaryKey = 'producto_id';

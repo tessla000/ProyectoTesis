@@ -7,6 +7,7 @@ use App\Info;
 use App\Marca;
 use App\Rol;
 use App\Transaccion;
+use ChristianKuri\LaravelFavorite\Traits\Favoriteability;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
+    use Favoriteability;
 
     protected $table = 'users';
     protected $primaryKey = 'usuario_id';

@@ -30,7 +30,10 @@ Route::post('checkout/webpay/response', 'CheckoutController@response')->name('re
 Route::post('checkout/webpay/finish', 'CheckoutController@finish')->name('finish');
 
 // Route::get('grafico', 'GraficoController@index')->name('grafico');
-// Route::get('grafico', 'GraficoController@grafico00')->name('grafico');
+
+Route::get('index', 'FavoritoController@index')->name('favorito.index');
+Route::post('add', 'FavoritoController@add')->name('favorito.add');
+Route::post('remove', 'FavoritoController@remove')->name('favorito.remove');
 
 Route::resource('categoria','CategoriaController')->parameters(["categoria" => "categoria"])->names('categoria');
 Route::resource('direccion','DireccionController')->parameters(["direccion" => "direccion"])->names('direccion');
@@ -42,3 +45,4 @@ Route::resource('producto','ProductoController')->parameters(["producto" => "pro
 Route::resource('transaccion','TransaccionController')->parameters(["transaccion" => "transaccion"])->names('transaccion');
 Route::resource('usuario','UserController')->parameters(["usuario" => "usuario"])->names('usuario');
 Route::resource('grafico','GraficoController')->parameters(["grafico" => "grafico"])->names('grafico');
+// Route::resource('favorito','FavoritoController')->parameters(["favorito" => "favorito"])->names('favorito');

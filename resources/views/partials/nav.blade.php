@@ -9,9 +9,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
+                @auth
+                @if(Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3)
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('grafico.index') }}">Grafico</a>
                 </li>
+                @endif
+                @endauth
+                @auth
+                @if(Auth::user()->rol_id == 2)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('favorito.index') }}">Favoritos</a>
+                </li>
+                @endif
+                @endauth
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('categoria.index') }}">Categorias</a>
                 </li>

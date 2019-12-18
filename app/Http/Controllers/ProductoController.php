@@ -53,10 +53,10 @@ class ProductoController extends Controller
         }else{
             if ($marca) {
                 $marca = Marca::where('name', $marca)->get();
-                    $producto = Producto::with('marca')->whereIn('marca_id', $marca)->get();
+                $producto = Producto::with('marca')->whereIn('marca_id', $marca)->get();
             }elseif ($categoria) {
                 $categoria = Categoria::where('name', $categoria)->get();
-                    $producto = Producto::with('categoria')->whereIn('categoria_id', $categoria)->get();
+                $producto = Producto::with('categoria')->whereIn('categoria_id', $categoria)->get();
             }else{
                 $producto = Producto::inRandomOrder()->get();
             }
