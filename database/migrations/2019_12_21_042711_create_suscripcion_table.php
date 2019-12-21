@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFavoritesTable extends Migration
+class CreateSuscripcionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateFavoritesTable extends Migration
      */
     public function up()
     {
-        Schema::create('favorites', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned()->index();
-            $table->morphs('favoriteable');
-            $table->primary(['user_id', 'favoriteable_id', 'favoriteable_type']);
+        Schema::create('suscripcion', function (Blueprint $table) {
+            $table->increments('suscripcion_id');
+            $table->string('name')->unique();
+            $table->integer('cantidad_productos')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateFavoritesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorites');
+        Schema::dropIfExists('suscripcion');
     }
 }

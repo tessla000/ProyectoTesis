@@ -6,6 +6,7 @@ use App\Direccion;
 use App\Info;
 use App\Marca;
 use App\Rol;
+use App\Suscripcion;
 use App\Transaccion;
 use ChristianKuri\LaravelFavorite\Traits\Favoriteability;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -25,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'rol_id', 'confirmed'
+        'name', 'email', 'password', 'rol_id'
     ];
 
     /**
@@ -34,7 +35,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'rol_id', 'confirmed'
+        'password', 'remember_token', 'rol_id'
     ];
 
     /**
@@ -69,6 +70,11 @@ class User extends Authenticatable
     public function transaccions()
     {
         return $this->hasMany(Transaccion::class, 'transaccion_id', 'transaccion_id');
+    }
+
+    public function suscripcions()
+    {
+        return $this->hasMany(Suscripcion::class, 'suscripcion_id', 'suscripcion_id');
     }
 
     public function getRouteKeyName()

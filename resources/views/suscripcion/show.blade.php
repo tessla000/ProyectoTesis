@@ -2,14 +2,13 @@
 @section('content')
 <div class="row justify-content-center">
 	<div class="jumbotron text-center">
-		<h1>Mostrando Usuario {{ $usuario->name }}</h1>
+		<h1>Mostrando {{ $suscripcion->name }}</h1>
 		<p>
-			<strong>Nombre:</strong> {{ $usuario->name }}<br>
-			<strong>Email:</strong> {{ $usuario->email }}<br>
-			<strong>Rol:</strong> {{ $usuario->rol ? $usuario->rol->name : 'Sin Rol' }}<br>
+			<strong>Nombre:</strong> {{ $suscripcion->name }}<br>
+			<strong>Cantidad De Productos:</strong> {{ $suscripcion->cantidad_productos }}
 		</p>
 		<div class="btn-group" role="group" aria-label="Basic example">
-			<a href="{{ route('usuario.index') }}">
+			<a href="{{ route('suscripcion.index') }}">
 				<button type="button" class="btn btn-warning">Regresar Atrás</button>
 			</a>
 		</div>

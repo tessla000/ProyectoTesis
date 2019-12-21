@@ -45,4 +45,5 @@ Route::resource('producto','ProductoController')->parameters(["producto" => "pro
 Route::resource('transaccion','TransaccionController')->parameters(["transaccion" => "transaccion"])->names('transaccion');
 Route::resource('usuario','UserController')->parameters(["usuario" => "usuario"])->names('usuario');
 Route::resource('grafico','GraficoController')->parameters(["grafico" => "grafico"])->names('grafico');
-// Route::resource('favorito','FavoritoController')->parameters(["favorito" => "favorito"])->names('favorito');
+Route::resource('suscripcion','SuscripcionController')->parameters(["suscripcion" => "suscripcion"])->names('suscripcion');
+Route::resource('suscripcionUsuario','SuscripcionUsuarioController')->parameters(["suscripcionUsuario" => "suscripcionUsuario"])->names('suscripcionUsuario');

@@ -23,12 +23,12 @@
                 </li>
                 @endif
                 @endauth
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('categoria.index') }}">Categorias</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('marca.index') }}">Marcas</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('producto.index') }}">Productos</a>
                 </li>
@@ -52,6 +52,9 @@
                 @if(Auth::user()->rol_id == 1)
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('usuario.index') }}">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('suscripcion.index') }}">Suscripciones</a>
                 </li>
                 @endif
                 @endauth

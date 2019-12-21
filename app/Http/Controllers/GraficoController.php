@@ -16,7 +16,6 @@ class GraficoController extends Controller
 	{
 		$marca = Marca::where('usuario_id', Auth::id())->get('marca_id');
 		$productos = Producto::whereYear('created_at', date('Y'))->whereIn('marca_id', $marca)->get();
-		// dd($productos);
 
 		$chart = Charts::database($productos, 'bar', 'highcharts')
 		->title("Productos Añadidos Por Mes")
@@ -27,19 +26,14 @@ class GraficoController extends Controller
 
 		$marca = Marca::where('usuario_id', Auth::id())->get('marca_id');
 		$producto = Producto::whereIn('marca_id', $marca)->get();
-
 		$pro_id = $producto->map->only(['producto_id']);
 		$pro_name = $producto->map->only(['name']);
-
 		$orden = Orden::whereIn('producto_id', $pro_id)->get();
-		$pro_q = $orden->map->only(['quantity', 'producto_id']);
 		$sum1 = $orden->sum('total');
 		$sum2 = $orden->sum('quantity');
 		$name = $producto->pluck('name');
-		// $value = $pro_q->pluck('quantity');
 		$orden2 = Orden::whereIn('producto_id', $pro_id)->groupBy('producto_id')->selectRaw('sum(quantity) as sum')->get();
 		$val = $orden2->pluck('sum');
-		// dd($val->all());
 
 		$line_chart = Charts::create('line', 'highcharts')
 		->title('Unidades Vendidos')
