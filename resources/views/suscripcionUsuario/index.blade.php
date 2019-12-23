@@ -13,24 +13,20 @@
   <table class="table table-hover">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Suscripcion</th>
         <th scope="col">Usuario</th>
         <th scope="col">Fecha Inicio</th>
         <th scope="col">Fecha Termino</th>
-        {{-- <th scope="col">Created At</th> --}}
         <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
       @foreach($suscripcionUsuario as $suscripcionUsuario)
       <tr>
-        <th scope="row">{{$suscripcionUsuario->suscripcion_Usuario_id}}</th>
         <td>{{$suscripcionUsuario->suscripcion_id ? $suscripcionUsuario->suscripcion->name : '' }}</td>
         <td>{{$suscripcionUsuario->usuario_id ? $suscripcionUsuario->usuario->name : ''}}</td>
         <td>{{$suscripcionUsuario->fecha_inicio}}</td>
         <td>{{$suscripcionUsuario->fecha_termino}}</td>
-        {{-- <td>{{$suscripcionUsuario->created_at->toFormattedDateString()}}</td> --}}
         <td>
           <div class="btn-group" role="group" aria-label="Basic example">
             <a href="{{ route('usuario.edit', $suscripcionUsuario->usuario->name) }}">
@@ -38,7 +34,7 @@
            </a>
          </div>
          <div class="btn-group" role="group" aria-label="Basic example">
-          <a href="{{ route('suscripcionUsuario.edit', $suscripcionUsuario) }}">
+          <a href="{{ route('suscripcionUsuario.edit', ['suscripcionUsuario' => $suscripcionUsuario]) }}">
            <button type="button" class="btn btn-warning">Edit</button>
          </a>
        </div>

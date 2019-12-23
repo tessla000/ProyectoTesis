@@ -91,7 +91,7 @@ class ProductoController extends Controller
     {
         $data = $request->validate(
             [
-                'name' => 'required|min:5|unique:producto',
+                'name' => 'required|min:5',
                 'valor' => 'required|min:3',
                 'stock' => 'required|min:1',
                 'descripcion' => 'required',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Favorito;
 use App\Marca;
 use App\Orden;
 use App\Producto;
@@ -16,6 +17,7 @@ class GraficoController extends Controller
 	{
 		$marca = Marca::where('usuario_id', Auth::id())->get('marca_id');
 		$productos = Producto::whereYear('created_at', date('Y'))->whereIn('marca_id', $marca)->get();
+		$proCount = $productos->count();
 
 		$chart = Charts::database($productos, 'bar', 'highcharts')
 		->title("Productos Añadidos Por Mes")
@@ -36,28 +38,26 @@ class GraficoController extends Controller
 		$val = $orden2->pluck('sum');
 
 		$line_chart = Charts::create('line', 'highcharts')
-		->title('Unidades Vendidos')
-		->elementLabel('Unidades')
+		->title('Unidades Vendidas')
+		->elementLabel('Cantidad')
 		->labels($name->all())
 		->values($val->all())
 		->dimensions(1000,500)
 		->responsive(true);
 
-		$areaspline_chart = Charts::multi('areaspline', 'highcharts')
-		->title('Areaspline Chart Demo')
-		->colors(['#ff0000', '#ffffff'])
-		->labels(['Jan', 'Feb', 'Mar', 'Apl', 'May','Jun'])
-		->dataset('Product 1', [10, 15, 20, 25, 30, 35])
-		->dataset('Product 2',  [14, 19, 26, 32, 40, 50]);
-
 		$area_chart = Charts::create('area', 'highcharts')
-		->title('Area Chart')
-		->elementLabel('Chart Labels')
-		->labels(['First', 'Second', 'Third'])
-		->values([28,52,64,86,99])
+		->title('Unidades Vendidas')
+		->elementLabel('Cantidad')
+		->labels($name->all())
+		->values($val->all())
 		->dimensions(1000,500)
 		->responsive(true);
 
-		return view('grafico.index',compact('chart', 'line_chart', 'areaspline_chart', 'area_chart','sum1', $sum1, 'sum2', $sum2));
+		$favoritos = Favorito::whereIn('favoriteable_id', $pro_id)->get('favoriteable_id');
+		$favName = $favoritos->map->only(['favoriteable_id']);
+		$proFav = Producto::whereIn('producto_id', $favName)->get();
+		// dd($proFav);
+
+		return view('grafico.index',compact('chart', 'area_chart', 'sum1', $sum1, 'sum2', $sum2, 'proCount', $proCount, 'proFav', $proFav));
 	}
 }

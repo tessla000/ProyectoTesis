@@ -9,11 +9,11 @@
 			{{ csrf_field() }}
 			<div class="form-group">
 				<label for="name">Name</label>
-				<input type="text" value="{{$marca->name}}" class="form-control" name="name" >
+				<input type="text" value="{{old('name', $marca->name)}}" class="form-control" name="name" >
 			</div>
 			<div class="form-group">
 				<label for="descripcion">Descripcion</label>
-				<input type="text" value="{{$marca->descripcion}}" class="form-control" name="descripcion" >
+				<input type="text" value="{{old('descripcion', $marca->descripcion)}}" class="form-control" name="descripcion" >
 			</div>
 			@auth
 			@if(Auth::user()->rol_id == 1)

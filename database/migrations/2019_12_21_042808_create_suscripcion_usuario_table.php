@@ -17,8 +17,8 @@ class CreateSuscripcionUsuarioTable extends Migration
             $table->increments('suscripcion_usuario_id');
             $table->integer('suscripcion_id')->lenght(10)->unsigned()->index();
             $table->integer('usuario_id')->lenght(10)->unsigned()->index();
-            $table->timestamps('fecha_inicio');
-            $table->timestamps('fecha_termino');
+            $table->date('fecha_inicio');
+            $table->date('fecha_termino');
             $table->softDeletes();
             $table->timestamps();
         });

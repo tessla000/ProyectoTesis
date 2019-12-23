@@ -4,7 +4,7 @@
   @auth
   @if(Auth::user()->rol_id == 1)
   <div class="btn-group" role="group" aria-label="Basic example">
-    <a class="nav-link" href="{{ route('usuario.create') }}">
+    <a class="nav-link" href="{{ route('rol.create') }}">
       <button type="button" class="btn btn-warning">Añadir</button>
     </a>
   </div>
@@ -14,8 +14,7 @@
     <thead class="thead-dark">
       <tr>
         <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Rol</th>
+        <th scope="col">Descripcion</th>
         @auth
         @if(Auth::user()->rol_id == 1)
         <th scope="col">Action</th>
@@ -24,19 +23,18 @@
       </tr>
     </thead>
     <tbody>
-      @foreach($usuario as $usuario)
+      @foreach($rol as $rol)
       <tr>
-        <td><a href="{{ route('usuario.show', $usuario) }}">{{$usuario->name}}</a></td>
-        <td>{{$usuario->email}}</td>
-        <td>{{$usuario->rol ? $usuario->rol->name : 'Sin rol asignado'}}</td>
+        <td><a href="{{ route('rol.show', $rol) }}">{{$rol->name}}</a></td>
+        <td>{{$rol->descripcion}}</td>
         @auth
         @if(Auth::user()->rol_id == 1)
         <td>
           <div class="btn-group" role="group" aria-label="Basic example">
-            <a href="{{ route('usuario.edit', $usuario) }}">
+            <a href="{{ route('rol.edit', $rol) }}">
              <button type="button" class="btn btn-warning">Edit</button>
            </a>
-           <form action="{{route('usuario.destroy', $usuario)}}" method="POST">
+           <form action="{{route('rol.destroy', $rol)}}" method="POST">
              <input type="hidden" name="_method" value="DELETE">
              <input type="hidden" name="_token" value="{{ csrf_token() }}">
              <input type="submit" class="btn btn-danger" value="Delete"/>

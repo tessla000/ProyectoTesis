@@ -13,24 +13,20 @@
   <table class="table table-hover">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Nombre</th>
         <th scope="col">Cantidad De Productos</th>
         <th scope="col">Clientes</th>
         <th scope="col">Nuevo Cliente</th>
-        {{-- <th scope="col">Created At</th> --}}
         <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
       @foreach($suscripcion as $suscripcion)
       <tr>
-        <th scope="row">{{$suscripcion->suscripcion_id}}</th>
         <td>{{$suscripcion->name}}</td>
         <td>{{$suscripcion->cantidad_productos}}</td>
         <td><a href="{{ route('suscripcionUsuario.index', ['suscripcion' => $suscripcion]) }}">Clientes</a></td>
         <td><a href="{{ route('suscripcionUsuario.create', ['nuevaSuscripcion' => $suscripcion]) }}">Nuevo Cliente</a></td>
-        {{-- <td>{{$suscripcion->created_at->toFormattedDateString()}}</td> --}}
         <td>
           <div class="btn-group" role="group" aria-label="Basic example">
             <a href="{{ route('suscripcion.edit', $suscripcion) }}">

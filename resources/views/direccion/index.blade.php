@@ -11,7 +11,6 @@
   <table class="table table-hover">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Rut</th>
         <th scope="col">Nombre</th>
         <th scope="col">Apellido</th>
@@ -29,7 +28,6 @@
     <tbody>
       @foreach($direccion as $direccion)
       <tr>
-        <th scope="row">{{$direccion->direccion_id}}</th>
         <td><a href="{{ route('direccion.show', $direccion) }}">{{$direccion->rut}}</a></td>
         <td>{{$direccion->name}}</td>
         <td>{{$direccion->lastname}}</td>

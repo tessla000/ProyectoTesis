@@ -47,3 +47,4 @@ Route::resource('usuario','UserController')->parameters(["usuario" => "usuario"]
 Route::resource('grafico','GraficoController')->parameters(["grafico" => "grafico"])->names('grafico');
 Route::resource('suscripcion','SuscripcionController')->parameters(["suscripcion" => "suscripcion"])->names('suscripcion');
 Route::resource('suscripcionUsuario','SuscripcionUsuarioController')->parameters(["suscripcionUsuario" => "suscripcionUsuario"])->names('suscripcionUsuario');
+Route::resource('rol','RolController')->parameters(["rol" => "rol"])->names('rol');

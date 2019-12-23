@@ -12,7 +12,6 @@ class CategoriaSeeder extends Seeder
      */
     public function run()
     {
-    	Categoria::create(['name' =>'Sin Categoria']);
     	Categoria::create(['name' =>'Aceite']);
     	Categoria::create(['name' =>'Cereales']);
     	Categoria::create(['name' =>'Condimentos']);

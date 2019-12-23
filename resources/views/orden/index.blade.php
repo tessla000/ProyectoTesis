@@ -13,7 +13,6 @@
   <table class="table table-hover">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Quantity</th>
         <th scope="col">Price</th>
         <th scope="col">Total</th>

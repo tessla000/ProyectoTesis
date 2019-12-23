@@ -4,9 +4,7 @@
   <table class="table table-hover">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Codigo Seguimiento</th>
-        <th scope="col">Estado</th>
         <th scope="col">Rut</th>
         <th scope="col">Nombre</th>
         <th scope="col">Apellido</th>
@@ -27,9 +25,7 @@
       @foreach($envio as $envio)
       <tr>
         {{-- <th scope="row"><a href="{{ route('envio.show', $envio) }}">{{$envio->envio_id}}</a></th> --}}
-        <th scope="row">{{$envio->envio_id}}</a></th>
         <td>{{$envio->codigoSeguimiento}}</td>
-        <td>{{$envio->estado}}</td>
         <td>{{$envio->direccion_id ? $envio->direccion->rut : ''}}</td>
         <td>{{$envio->direccion_id ? $envio->direccion->name : ''}}</td>
         <td>{{$envio->direccion_id ? $envio->direccion->lastname : ''}}</td>

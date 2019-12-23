@@ -13,11 +13,9 @@
   <table class="table table-hover">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Descripcion</th>
         <th scope="col">Productos</th>
-        <th scope="col">Created At</th>
         @auth
         @if(Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3)
         <th scope="col">Action</th>
@@ -28,11 +26,9 @@
     <tbody>
       @foreach($marca as $marca)
       <tr>
-        <th scope="row">{{$marca->marca_id}}</th>
-        <td><a href="{{ route('marca.show', $marca) }}">{{$marca->name}}</a></td>
+        <td scope="row"><a href="{{ route('marca.show', $marca) }}">{{$marca->name}}</a></td>
         <td>{{$marca->descripcion}}</td>
-        <td><a href="{{ route('producto.index', ['marca' => $marca]) }}">Productos</a></td>
-        <td>{{$marca->created_at->toFormattedDateString()}}</td>
+        <td><a href="{{ route('producto.index', ['marca' => $marca]) }}">Ir A Productos</a></td>
         @auth
         @if(Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3)
         <td>

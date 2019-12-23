@@ -15,17 +15,6 @@
 				<label for="email">Email</label>
 				<input type="text" value="{{ old('email', $usuario->email) }}" class="form-control" name="email" >
 			</div>
-			{{-- <div class="form-group">
-				<label for="password">Contraseña</label>
-				<input type="text" value="{{ old('password', $usuario->password) }}" class="form-control" name="password" >
-			</div> --}}
-			<div class="form-group">
-				<label for="confirmed">Confirmación Cliente</label>
-				<select name="confirmed" class="form-control">
-					<option value="0">Inactivo</option>
-					<option value="1">Activo</option>
-				</select>
-			</div>
 			<div class="form-group">
 				<label for="rol_id">Rol</label>
 				<select name="rol_id" class="form-control">

@@ -12,11 +12,14 @@
                 @auth
                 @if(Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('grafico.index') }}">Grafico</a>
+                    <a class="nav-link" href="{{ route('grafico.index') }}">Informacion</a>
                 </li>
                 @endif
-                @endauth
-                @auth
+                @if(Auth::user()->rol_id == 1)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('rol.index') }}">Roles</a>
+                </li>
+                @endif
                 @if(Auth::user()->rol_id == 2)
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('favorito.index') }}">Favoritos</a>
@@ -25,10 +28,10 @@
                 @endauth
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('categoria.index') }}">Categorias</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('marca.index') }}">Marcas</a>
-                </li> --}}
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('producto.index') }}">Productos</a>
                 </li>

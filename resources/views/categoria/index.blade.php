@@ -13,7 +13,6 @@
   <table class="table table-hover">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Descripcion</th>
         <th scope="col">Productos</th>
@@ -28,7 +27,6 @@
     <tbody>
       @foreach($categoria as $categoria)
       <tr>
-        <th scope="row">{{$categoria->categoria_id}}</th>
         <td><a href="{{ route('categoria.show', $categoria) }}">{{$categoria->name}}</a></td>
         <td>{{$categoria->descripcion}}</td>
         <td><a href="{{ route('producto.index', ['categoria' => $categoria]) }}">Productos</td>

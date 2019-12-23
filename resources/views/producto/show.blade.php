@@ -25,9 +25,10 @@
 					<button class="btn btn-success" type="submit">Añadir Al Carro</button>
 				</form><br>
 			</strong>
+			@auth
+			@if(Auth::user()->rol_id !== 3)
+			@if($producto->isFavorited())
 			<strong>
-				@auth
-				@if($producto->isFavorited())
 				<form action="{{ route('favorito.remove', ['favorito' => $producto->producto_id]) }}" method="POST">
 					@csrf
 					<button type="submit" class="btn btn-info">Quitar De Favoritos</button>
@@ -37,12 +38,13 @@
 					@csrf
 					<button type="submit" class="btn btn-info">Añadir A Favoritos</button>
 				</form>
-				@endif
-				@endauth
 			</strong>
+			@endif
+			@endif
+			@endauth
 		</p>
 		<div class="btn-group" role="group" aria-label="Basic example">
-			<a href="{{ URL::previous() }}">
+			<a href="{{ route('producto.index') }}">
 				<button type="button" class="btn btn-warning">Regresar Atrás</button>
 			</a>
 		</div>

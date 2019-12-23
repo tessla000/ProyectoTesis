@@ -65,7 +65,7 @@ class MarcaController extends Controller
     {
         $data = $request->validate(
             [
-                'name' => 'required|min:5|unique:marca',
+                'name' => 'required|min:5',
                 'descripcion' => 'nullable',
                 'usuario_id' => 'nullable'
             ],[

@@ -11,7 +11,6 @@
   <table class="table table-hover">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Rut</th>
         <th scope="col">Nombre</th>
         <th scope="col">Apellido</th>
@@ -23,7 +22,6 @@
     <tbody>
       @foreach($info as $info)
       <tr>
-        <td scope="row">{{$info->info_id}}</th>
           <td><a href="{{ route('info.show', $info) }}">{{$info->rut}}</a></td>
           <td>{{$info->name}}</td>
           <td>{{$info->lastname}}</td>

@@ -88,7 +88,7 @@ class SuscripcionUsuarioController extends Controller
             'fecha_termino' => $request['fecha_termino']
         ]);
         $request->session()->flash('message', 'Suscripcion Almacenada!');
-        return redirect()->route('suscripcionUsuario.show', $suscripcionUsuario);
+        return redirect()->route('suscripcionUsuario.index');
 
     }
 
@@ -109,9 +109,16 @@ class SuscripcionUsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, SuscripcionUsuario $suscripcionUsuario)
     {
-        //
+        if (Auth::user()->rol_id == 1) {
+            $usuario = User::where('usuario_id', $suscripcionUsuario->usuario->usuario_id)->get();
+            $suscripcion = Suscripcion::all();
+            return view('suscripcionUsuario.edit', compact('suscripcionUsuario', 'suscripcion', 'usuario', $suscripcionUsuario, $suscripcion, $usuario));
+        }else{
+            request()->session()->flash('message', 'Acceso Denegado!');
+            return redirect()->route('home');
+        }
     }
 
     /**
@@ -121,9 +128,22 @@ class SuscripcionUsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SuscripcionUsuario $suscripcionUsuario)
     {
-        //
+        $data = $request->validate(
+            [
+                'suscripcion_id' => 'required',
+                'fecha_inicio' => 'required|date',
+                'fecha_termino' => 'required|date'
+            ],[
+                'suscripcion_id.required' => 'Sucripcion requerida',
+                'fecha_inicio.required' => 'Fecha de inicio requerida',
+                'fecha_termino.required' => 'Fecha de termino requerida'
+            ]
+        );
+        $suscripcionUsuario->update($data);
+        $request->session()->flash('message', 'Suscripcion Modificada!');
+        return redirect()->route('suscripcionUsuario.index', $suscripcionUsuario);
     }
 
     /**
@@ -132,8 +152,15 @@ class SuscripcionUsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, SuscripcionUsuario $suscripcionUsuario)
     {
-        //
+        if (Auth::user()->rol_id == 1){
+            $suscripcionUsuario->delete();
+            $request->session()->flash('message', 'Suscripcion Eliminada!');
+            return redirect()->route('suscripcionUsuario.index', $suscripcionUsuario);
+        }else{
+            request()->session()->flash('message', 'Acceso Denegado!');
+            return redirect()->route('home');
+        }
     }
 }

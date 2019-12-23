@@ -9,11 +9,11 @@
 			{{ csrf_field() }}
 			<div class="form-group">
 				<label for="name">Name</label>
-				<input type="text" value="{{$suscripcion->name}}" class="form-control" name="name" >
+				<input type="text" value="{{old('name', $suscripcion->name)}}" class="form-control" name="name" >
 			</div>
 			<div class="form-group">
 				<label for="cantidad_productos">Cantidad De Productos</label>
-				<input type="text" value="{{$suscripcion->cantidad_productos}}" class="form-control" name="cantidad_productos" >
+				<input type="text" value="{{old('cantidad_productos', $suscripcion->cantidad_productos)}}" class="form-control" name="cantidad_productos" >
 			</div>
 			@if ($errors->any())
 			<div class="alert alert-danger">

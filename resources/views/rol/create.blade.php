@@ -2,18 +2,21 @@
 @section('content')
 <div class="row justify-content-center">
 	<div class="jumbotron text-center">
-		<h1>Editar</h1>
+		<h1>Añadir Nueva Rol</h1>
 		<hr>
-		<form action="{{ route('categoria.update', ['categoria' => $categoria]) }}" method="POST">
-			<input type="hidden" name="_method" value="PUT">
-			{{ csrf_field() }}
+		<form action="{{ route('rol.store') }}" method="post">
+			@csrf
 			<div class="form-group">
-				<label for="name">Name</label>
-				<input type="text" value="{{old('name', $categoria->name)}}" class="form-control" name="name" >
+				<label for="rol_id">Id</label>
+				<input type="text" class="form-control" name="rol_id">
+			</div>
+			<div class="form-group">
+				<label for="name">Nombre</label>
+				<input type="text" class="form-control" name="name">
 			</div>
 			<div class="form-group">
 				<label for="descripcion">Descripcion</label>
-				<input type="text" value="{{old('descripcion', $categoria->descripcion)}}" class="form-control" name="descripcion" >
+				<input type="text" class="form-control" name="descripcion">
 			</div>
 			@if ($errors->any())
 			<div class="alert alert-danger">
@@ -26,7 +29,7 @@
 			@endif
 			<button type="submit" class="btn btn-primary">Submit</button>
 			<div class="btn-group" role="group" aria-label="Basic example">
-				<a href="{{ route('categoria.index') }}">
+				<a href="{{ route('rol.index') }}">
 					<button type="button" class="btn btn-warning">Regresar Atrás</button>
 				</a>
 			</div>
