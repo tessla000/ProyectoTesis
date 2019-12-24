@@ -48,6 +48,7 @@ class CheckoutController extends Controller
 				'responseCode' => $result->detailOutput->responseCode,
 				'usuario_id' => Auth::id()
 			]);
+			$webpayNormal->acknowledgeTransaction();
 			foreach (Cart::getContent() as $item) {
 				$cart = $item->quantity;
 				$producto = Producto::find($item->id);
@@ -87,7 +88,6 @@ class CheckoutController extends Controller
 				]);
 			}
 		}
-		$webpayNormal->acknowledgeTransaction();
 		return RedirectorHelper::redirectBackNormal($result->urlRedirection);
 	}
 
