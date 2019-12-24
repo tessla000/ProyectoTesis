@@ -35,17 +35,17 @@
              <button type="button" class="btn btn-warning">Edit</button>
            </a>
            <form action="{{route('rol.destroy', $rol)}}" method="POST">
-             <input type="hidden" name="_method" value="DELETE">
-             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-             <input type="submit" class="btn btn-danger" value="Delete"/>
-           </form>
-         </div>
-       </td>
-       @endif
-       @endauth
-     </tr>
-     @endforeach
-   </tbody>
- </table>
+            @csrf
+            @method('DELETE')
+            <input type="submit" class="btn btn-danger" value="Delete"/>
+          </form>
+        </div>
+      </td>
+      @endif
+      @endauth
+    </tr>
+    @endforeach
+  </tbody>
+</table>
 </div>
 @endsection

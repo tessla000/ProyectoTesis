@@ -8,21 +8,8 @@
 			</a>
 			<div class="card-body">
 				<h5 class="card-title">{{$producto->name}}</h5>
-				<p class="card-text">{{ $producto->descripcion }}</p>
 				<p class="card-text">{{ $producto->favoritesCount }} Likes</p>
-				<p class="card-text"><small class="text-muted">${{ $producto->valor }}</small></p>
 			</div>
-			@auth
-			@if(Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3)
-			<div class="card-footer">
-				<div class="btn-group" role="group" aria-label="Basic example">
-					<a href="{{ route('producto.edit', ['producto' => $producto]) }}">
-						<button type="button" class="btn btn-warning">Edit</button>
-					</a>
-				</div>
-			</div>
-			@endif
-			@endauth
 		</div>
 		@endforeach
 	</div>

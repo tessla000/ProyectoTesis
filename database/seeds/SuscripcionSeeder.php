@@ -12,8 +12,8 @@ class SuscripcionSeeder extends Seeder
      */
     public function run()
     {
-        Suscripcion::create(['name' =>'Suscripción A', 'cantidad_productos' => 10]);
-    	Suscripcion::create(['name' =>'Suscripción B', 'cantidad_productos' => 20]);
-    	Suscripcion::create(['name' =>'Suscripción C', 'cantidad_productos' => 30]);
+        Suscripcion::create(['name' =>'Suscripción A', 'cantidad_productos' => 20]);
+    	Suscripcion::create(['name' =>'Suscripción B', 'cantidad_productos' => 30]);
+    	Suscripcion::create(['name' =>'Suscripción C', 'cantidad_productos' => 40]);
     }
 }

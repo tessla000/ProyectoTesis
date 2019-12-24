@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\Marca;
+use App\Orden;
 use App\Producto;
+use App\Suscripcion;
+use App\SuscripcionUsuario;
+use App\Transaccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -71,14 +75,20 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->rol_id == 1) {
-            $marca = Marca::all();
-        }elseif(Auth::user()->rol_id == 3){
-            $marca = Marca::where('usuario_id', Auth::id())->get();
+        $suscripcion = SuscripcionUsuario::where('usuario_id', Auth::id())->exists();
+        if ($suscripcion) {
+            if (Auth::user()->rol_id == 1) {
+                $marca = Marca::all();
+            }elseif(Auth::user()->rol_id == 3){
+                $marca = Marca::where('usuario_id', Auth::id())->get();
+            }
+            $categoria = Categoria::all();
+            $producto = new Producto();
+            return view('producto.create', compact('categoria', 'marca', 'producto'));
+        }else{
+            request()->session()->flash('message', 'Acceso No Disponible Por Ahora!');
+            return redirect()->route('producto.index');
         }
-        $categoria = Categoria::all();
-        $producto = new Producto();
-        return view('producto.create', compact('categoria', 'marca', 'producto'));
     }
 
     /**
@@ -142,22 +152,29 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        if (Auth::user()->rol_id == 1) {
-            $marca = Marca::all();
-        }elseif (Auth::user()->rol_id == 2) {
-            request()->session()->flash('message', 'Acceso Denegado!');
-            return redirect()->route('producto.index');
-        }elseif(Auth::user()->rol_id == 3){
-            if ($producto->marca['usuario_id'] == Auth::id()) {
-                $marca = Marca::where('usuario_id', Auth::id())->get();
-            }else{
-             request()->session()->flash('message', 'Acceso Denegado!');
-             return redirect()->route('producto.index');
-         }
-     }
-     $categoria = Categoria::all();
-     return view('producto.edit', compact('producto', 'categoria', 'marca', $producto));
- }
+        $suscripcion = SuscripcionUsuario::where('usuario_id', Auth::id())->get();
+        $suscripcionUsuario = $suscripcion->map->only(['usuario_id']);
+        if ($suscripcionUsuario) {
+            if (Auth::user()->rol_id == 1) {
+                $marca = Marca::all();
+            }elseif (Auth::user()->rol_id == 2) {
+                request()->session()->flash('message', 'Acceso Denegado!');
+                return redirect()->route('producto.index');
+            }elseif(Auth::user()->rol_id == 3){
+                if ($producto->marca['usuario_id'] == Auth::id()) {
+                    $marca = Marca::where('usuario_id', Auth::id())->get();
+                }else{
+                   request()->session()->flash('message', 'Acceso Denegado!');
+                   return redirect()->route('producto.index');
+               }
+           }
+           $categoria = Categoria::all();
+           return view('producto.edit', compact('producto', 'categoria', 'marca', $producto));
+       }else{
+        $request->session()->flash('message', 'Acceso Todavia No Disponible!');
+        return redirect()->route('producto.index');
+    }
+}
 
     /**
      * Update the specified resource in storage.
@@ -172,10 +189,8 @@ class ProductoController extends Controller
             [
                 'name' => 'nullable',
                 'valor' => 'nullable',
-                'stock' => 'nullable',
                 'descripcion' => 'nullable',
                 'categoria_id' => 'nullable',
-                'marca_id' => 'nullable',
                 'image' => 'nullable'
             ]
         );

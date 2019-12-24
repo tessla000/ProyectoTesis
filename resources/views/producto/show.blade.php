@@ -2,16 +2,16 @@
 @section('content')
 <div class="row justify-content-center">
 	<div class="jumbotron text-center">
-		<h1>Mostrando Producto {{ $producto->name }}</h1>
+		<h1>{{ $producto->name }}</h1>
 		<p>
 			<strong>Nombre:</strong> {{ $producto->name }}<br>
 			<strong>Valor:</strong> {{ $producto->valor }}<br>
 			<strong>Stock:</strong> {{ $producto->stock }}<br>
 			<strong>Descripcion:</strong> {{ $producto->descripcion }}<br>
 			<strong>Categoria:</strong> {{ $producto->categoria ? $producto->categoria->name : 'Categoría No Asignada' }}<br>
-			<strong>Marca:</strong> {{ $producto->marca ? $producto->marca->name : 'Categoría No Asignada' }}<br>
-			<strong>Favoritos: </strong> {{ $producto->favoritesCount }}<br>
-			<strong>Imagen:</strong>
+			<strong>Marca:</strong> <a href="{{ route('marca.show', ['marca' => $producto->marca->name]) }}">{{ $producto->marca ? $producto->marca->name : 'Categoría No Asignada' }}</a><br>
+			<strong>Likes: </strong> {{ $producto->favoritesCount }}<br>
+			<strong></strong>
 			@if($producto->image)
 			<div class="row">
 				<div class="col-12">

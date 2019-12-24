@@ -16,3 +16,11 @@
 .card-deck .card {
     max-width: calc(25% - 30px);
 }
+
+#divCategoria {
+    background-color: #33ff33;
+}
+
+#backColor {
+    background-color: #e6ffee;
+}

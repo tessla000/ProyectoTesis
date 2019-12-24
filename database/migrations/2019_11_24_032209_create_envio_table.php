@@ -16,7 +16,7 @@ class CreateEnvioTable extends Migration
         Schema::create('envio', function (Blueprint $table) {
             $table->increments('envio_id');
             $table->string('codigoSeguimiento');
-            $table->boolean('estado')->default(false);
+            $table->integer('estado')->lenght(2)->unsigned();
             $table->integer('direccion_id')->lenght(10)->unsigned()->index()->nullable();
             $table->integer('transaccion_id')->lenght(10)->unsigned()->index()->nullable();
             $table->timestamps();

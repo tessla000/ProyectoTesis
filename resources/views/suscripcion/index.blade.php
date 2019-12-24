@@ -33,14 +33,14 @@
              <button type="button" class="btn btn-warning">Edit</button>
            </a>
            <form action="{{route('suscripcion.destroy', $suscripcion)}}" method="POST">
-             <input type="hidden" name="_method" value="DELETE">
-             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-             <input type="submit" class="btn btn-danger" value="Delete"/>
-           </form>
-         </td>
-       </tr>
-       @endforeach
-     </tbody>
-   </table>
- </div>
- @endsection
+            @csrf
+            @method('DELETE')
+            <input type="submit" class="btn btn-danger" value="Delete"/>
+          </form>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+</div>
+@endsection

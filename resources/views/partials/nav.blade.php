@@ -10,7 +10,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 @auth
-                @if(Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3)
+                @if(Auth::user()->rol_id == 3)
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('grafico.index') }}">Informacion</a>
                 </li>
@@ -33,10 +33,10 @@
                     <a class="nav-link" href="{{ route('marca.index') }}">Marcas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('producto.index') }}">Productos</a>
+                    <a class="nav-link" href="{{ route('producto.index') }}">Catalogo</a>
                 </li>
                 @auth
-                @if(Auth::user()->rol_id !== 3)
+                @if(Auth::user()->rol_id == 2)
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('direccion.index') }}">Direccion</a>
                 </li>

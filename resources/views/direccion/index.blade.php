@@ -19,7 +19,6 @@
         <th scope="col">Descripcion</th>
         <th scope="col">Comuna</th>
         <th scope="col">Usuario</th>
-        <th scope="col">Created At</th>
         @auth
         <th scope="col">Action</th>
         @endauth
@@ -36,7 +35,6 @@
         <td>{{$direccion->descripcion}}</td>
         <td>{{$direccion->comuna ? $direccion->comuna->name : 'Comuna No Asignada' }}</td>
         <td>{{$direccion->usuario ? $direccion->usuario->name : 'Usuario No Asignado' }}</td>
-        <td>{{$direccion->created_at->toFormattedDateString()}}</td>
         @auth
         <td>
           <div class="btn-group" role="group" aria-label="Basic example">

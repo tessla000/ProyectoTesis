@@ -18,7 +18,7 @@ class CreateDireccionTable extends Migration
             $table->string('rut', 12);
             $table->string('name', 50);
             $table->string('lastname', 50);
-            $table->string('codigoPostal', 7);
+            $table->integer('codigoPostal')->length(7)->unsigned();
             $table->string('direccion1', 100);
             $table->string('descripcion', 250)->nullable();
             $table->integer('comuna_id')->length(10)->unsigned()->index()->nullable();

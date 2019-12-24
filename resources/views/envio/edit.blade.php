@@ -12,12 +12,12 @@
 				<input type="text" value="{{ old('codigoSeguimiento', $envio->codigoSeguimiento) }}" class="form-control" name="codigoSeguimiento" >
 			</div>
 			<div class="form-group">
-				<label for="direccion_id">Direccion</label>
-				<input type="text" disabled value="{{ old('direccion_id', $envio->direccion->direccion1) }}" class="form-control" name="direccion_id" >
-			</div>
-			<div class="form-group">
-				<label for="transaccion_id">Estado</label>
-				<input type="text" disabled value="{{ old('transaccion_id', $envio->transaccion->buyOrder) }}" class="form-control" name="transaccion_id" >
+				<label for="estado">Estado</label>
+				<select name="estado" class="form-control">
+					<option value="0">En Proceso</option>
+					<option value="1">En Camino</option>
+					<option value="2">Recivido</option>
+				</select><br>
 			</div>
 			@if ($errors->any())
 			<div class="alert alert-danger">

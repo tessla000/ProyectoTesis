@@ -18,7 +18,7 @@
 				<label for="direccion_id">Direccion</label>
 				<select name="direccion_id" class="form-control">
 					@foreach($direccion as $direccion)
-					<option value="{{ $direccion->direccion_id }}" {{ $direccion->direccion_id == $envio->direccion_id ? 'selected' : ''}}>{{ $direccion->direccion1 }}</option>
+					<option value="{{ $direccion->direccion_id }}" {{ $direccion->direccion_id == $envio->direccion_id ? 'selected' : ''}}>{{ $direccion->direccion1 }}, {{ $direccion->comuna->name }}, {{ $direccion->comuna->codigoPostal }}</option>
 					@endforeach
 				</select><br>
 			</div>

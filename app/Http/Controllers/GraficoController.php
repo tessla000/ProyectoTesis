@@ -30,7 +30,9 @@ class GraficoController extends Controller
 		$producto = Producto::whereIn('marca_id', $marca)->get();
 		$pro_id = $producto->map->only(['producto_id']);
 		$pro_name = $producto->map->only(['name']);
-		$orden = Orden::whereIn('producto_id', $pro_id)->get();
+		$transaccion = Transaccion::where('responseCode', 0)->get();
+		$trans = $transaccion->map->only(['transaccion_id']);
+		$orden = Orden::whereIn('producto_id', $pro_id)->whereIn('transaccion_id', $trans)->get();
 		$sum1 = $orden->sum('total');
 		$sum2 = $orden->sum('quantity');
 		$name = $producto->pluck('name');

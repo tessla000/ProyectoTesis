@@ -5,6 +5,7 @@
     <thead class="thead-dark">
       <tr>
         <th scope="col">Codigo Seguimiento</th>
+        <th scope="col">Estado</th>
         <th scope="col">Rut</th>
         <th scope="col">Nombre</th>
         <th scope="col">Apellido</th>
@@ -26,6 +27,14 @@
       <tr>
         {{-- <th scope="row"><a href="{{ route('envio.show', $envio) }}">{{$envio->envio_id}}</a></th> --}}
         <td>{{$envio->codigoSeguimiento}}</td>
+        <td>
+          @if($envio->estado == 0)
+          En Proceso
+          @elseif($envio->estado == 1)
+          En Camino
+          @elseif($envio->estado == 2)
+          Recivido
+        @endif</td>
         <td>{{$envio->direccion_id ? $envio->direccion->rut : ''}}</td>
         <td>{{$envio->direccion_id ? $envio->direccion->name : ''}}</td>
         <td>{{$envio->direccion_id ? $envio->direccion->lastname : ''}}</td>

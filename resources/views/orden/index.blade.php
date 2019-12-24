@@ -13,16 +13,10 @@
   <table class="table table-hover">
     <thead class="thead-dark">
       <tr>
+        <th scope="col">Producto</th>
         <th scope="col">Quantity</th>
         <th scope="col">Price</th>
         <th scope="col">Total</th>
-        <th scope="col">Transaccion</th>
-        <th scope="col">Created At</th>
-        @auth
-        @if(Auth::user()->rol_id !== 2)
-        <th scope="col">Action</th>
-        @endif
-        @endauth
       </tr>
     </thead>
     <tbody>
@@ -32,8 +26,6 @@
         <td>{{$orden->quantity}}</td>
         <td>{{$orden->price}}</td>
         <td>{{$orden->total}}</td>
-        <td>{{$orden->transaccion_id}}</td>
-        <td>{{$orden->created_at->toFormattedDateString()}}</td>
       </tr>
       @endforeach
     </tbody>

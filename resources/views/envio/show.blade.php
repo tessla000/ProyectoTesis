@@ -8,7 +8,7 @@
 			<strong>Direccion:</strong> {{ $envio->direccion ? $envio->direccion->direccion1 :'' }}<br>
 			<strong>Buy Order:</strong> {{ $envio->transaccion ? $envio->transaccion->buyOrder : ''}}<br>
 		<div class="btn-group" role="group" aria-label="Basic example">
-			<a href="{{ URL::previous() }}">
+			<a href="{{ route('transaccion.index') }}">
 				<button type="button" class="btn btn-warning">Regresar Atrás</button>
 			</a>
 		</div>

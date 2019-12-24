@@ -81,8 +81,8 @@ class EnvioController extends Controller
             return redirect()->route('transaccion.index');
         }else{
             $envio = Envio::create([
-            // 'codigoSeguimiento' => $request['codigoSeguimiento'],
-            // 'estado' => $request['estado'],
+                'codigoSeguimiento' => "0",
+                'estado' => 0,
                 'transaccion_id' => $request['transaccion_id'],
                 'direccion_id' => $request['direccion_id']
             ]);

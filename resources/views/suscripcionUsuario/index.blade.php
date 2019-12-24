@@ -39,14 +39,14 @@
          </a>
        </div>
        <form action="{{route('suscripcionUsuario.destroy', $suscripcionUsuario)}}" method="POST">
-         <input type="hidden" name="_method" value="DELETE">
-         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-         <input type="submit" class="btn btn-danger" value="Delete"/>
-       </form>
-     </td>
-   </tr>
-   @endforeach
- </tbody>
+        @csrf
+        @method('DELETE')
+        <input type="submit" class="btn btn-danger" value="Delete"/>
+      </form>
+    </td>
+  </tr>
+  @endforeach
+</tbody>
 </table>
 <div class="btn-group" role="group" aria-label="Basic example">
   <a href="{{ route('suscripcion.index') }}">
